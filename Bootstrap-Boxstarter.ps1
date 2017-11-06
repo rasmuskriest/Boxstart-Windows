@@ -60,7 +60,6 @@ if ($DataDrive)
 {
     Set-EnvironmentVariable -Key "BoxStarter:DataDrive" -Value $DataDrive
 }
-}
 
 if ($SkipWindowsUpdate)
 {
