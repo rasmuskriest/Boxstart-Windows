@@ -71,7 +71,7 @@ if ($EnableWindowsAuthFeature)
     Set-EnvironmentVariable -Key "BoxStarter:EnableWindowsAuthFeature" -Value "1"
 }
 
-$installScript = 'https://raw.githubusercontent.com/rasmuskriest/Boxstarter-Windows/master/Deploy-Machines.ps1'
+$installScript = 'https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/Deploy-Machines.ps1'
 $webLauncherUrl = "http://boxstarter.org/package/nr/url?$installScript"
 
 Start-Process microsoft-edge:$webLauncherUrl
