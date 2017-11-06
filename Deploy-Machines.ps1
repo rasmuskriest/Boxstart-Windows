@@ -322,7 +322,6 @@ function Update-Path {
 
 $dataDriveLetter = Get-DataDrive
 $dataDrive = "$dataDriveLetter`:"
-$tempInstallFolder = New-InstallCache -InstallDrive $dataDrive
 
 # Change default Chocolatey behaviour
 Use-Checkpoint -Function ${Function:Enable-ChocolateyFeatures} -CheckpointName 'IntialiseChocolatey' -SkipMessage 'Chocolatey already configured'
