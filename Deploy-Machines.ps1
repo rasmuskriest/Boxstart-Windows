@@ -192,7 +192,6 @@ function Install-Browsers {
     choco install GoogleChrome
     choco install GoogleChrome.Canary
     choco install tor-browser
-    choco install vivaldi
 }
 
 function Install-CommunicationTools {
