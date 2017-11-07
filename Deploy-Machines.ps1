@@ -9,7 +9,7 @@
         START http://boxstarter.org/package/nr/url?http://boxstarter.org/package/nr/url?https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/Deploy-Machines.ps1
 #>
 
-$Boxstarter.RebootOk = $true
+$Boxstarter.RebootOk = $false
 $Boxstarter.NoPassword = $false
 $Boxstarter.AutoLogin = $true
 
