@@ -179,7 +179,6 @@ function Install-Prerequisites {
     choco install javaruntime
     choco install jdk8
     choco install notepad2
-    # choco install OneDriveForBusiness
     choco install paint.net
     choco install python
     choco install python2
@@ -255,7 +254,6 @@ function Install-WorkTools {
     # choco install evernote # Is in store
     # choco install instagiffer
     choco install Office365HomePremium
-    # choco install driveforoffice
     choco install outlookcaldav
     # choco install onetastic
     # choco install russian-grammatical-dictionary
