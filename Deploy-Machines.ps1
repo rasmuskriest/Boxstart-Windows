@@ -358,7 +358,8 @@ Use-Checkpoint -Function ${Function:Install-Gaming} -CheckpointName 'Install-Gam
 if (Test-Path env:\BoxStarter:InstallDesktop) {
     Write-BoxstarterMessage "Installing desktop-only software"
 
-    Use-Checkpoint -Function ${Function:Install-HyperV} -CheckpointName 'Install-HyperV' -SkipMessage 'Hyper-V already installed'
+    # Hyper-V commented out because not used at the moment
+    # Use-Checkpoint -Function ${Function:Install-HyperV} -CheckpointName 'Install-HyperV' -SkipMessage 'Hyper-V already installed'
     if (Test-PendingReboot) { Invoke-Reboot }
 
     Use-Checkpoint -Function ${Function:Install-DesktopOnly} -CheckpointName 'InstallDesktopOnly' -SkipMessage 'Desktop-only software already installed'
