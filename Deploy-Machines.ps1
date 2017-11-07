@@ -116,8 +116,6 @@ function Enable-ChocolateyFeatures {
 }
 
 function Set-BaseSettings {
-    Update-ExecutionPolicy -Policy Unrestricted
-
     Enable-RemoteDesktop
     Set-CornerNavigationOptions -EnableUsePowerShellOnWinX
     Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions -EnableShowFullPathInTitleBar
@@ -321,9 +319,6 @@ function Update-Path {
 $dataDriveLetter = Get-DataDrive
 $dataDrive = "$dataDriveLetter`:"
 
-# Change default Chocolatey behaviour
-Use-Checkpoint -Function ${Function:Enable-ChocolateyFeatures} -CheckpointName 'IntialiseChocolatey' -SkipMessage 'Chocolatey already configured'
-
 Use-Checkpoint -Function ${Function:Set-BaseSettings} -CheckpointName 'BaseSettings' -SkipMessage 'Base settings already configured'
 Use-Checkpoint -Function ${Function:Update-WindowsLibraries} -CheckpointName 'WindowsLibraries' -SkipMessage 'Libraries already moved'
 
@@ -373,6 +368,9 @@ if (Test-Path env:\BoxStarter:InstallSurface) {
 
 # Install Chocolatey as very last package
 choco install chocolatey
+
+# Change default Chocolatey behaviour
+Use-Checkpoint -Function ${Function:Enable-ChocolateyFeatures} -CheckpointName 'IntialiseChocolatey' -SkipMessage 'Chocolatey already configured'
 
 if (Test-PendingReboot) { Invoke-Reboot }
 
