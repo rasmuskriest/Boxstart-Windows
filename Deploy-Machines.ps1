@@ -203,7 +203,7 @@ function Install-CommunicationTools {
 
 function Install-DevTools {
     choco install android-sdk
-    choco install gitkraken
+    choco install github-desktop
     choco install heidisql
     choco install sqlitebrowser
     choco install vmwareworkstation
