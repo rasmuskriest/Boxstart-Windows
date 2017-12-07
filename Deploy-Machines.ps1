@@ -221,6 +221,11 @@ function Install-Vagrant {
 
 function Install-VisualStudioCode {
     choco install visualstudiocode
+
+    Start-Process code
+    Start-Sleep -s 10
+
+    code --install-extension Shan.code-settings-sync
     Update-Path
 }
 
