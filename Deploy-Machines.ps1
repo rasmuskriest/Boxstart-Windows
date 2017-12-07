@@ -164,6 +164,7 @@ function Install-PowerShellModules {
     Install-Module PSReadline -Scope CurrentUser -AllowClobber
     Install-Module posh-git -Scope CurrentUser -AllowClobber
     Install-Module oh-my-posh -Scope CurrentUser -AllowClobber
+    Install-Module z -Scope CurrentUser -AllowClobber
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Untrusted'
 }
 
@@ -221,17 +222,6 @@ function Install-Vagrant {
 function Install-VisualStudioCode {
     choco install visualstudiocode
     Update-Path
-
-    Start-Process code
-    Start-Sleep -s 10
-
-    code --install-extension donjayamanne.githistory
-    code --install-extension donjayamanne.python
-    code --install-extension marcostazi.vs-code-vagrantfile
-    code --install-extension mdob2k.stata-language
-    code --install-extension ms-vscode.powershell
-    code --install-extension ms-vscode.theme-tomorrowkit
-    code --install-extension robertohuertasm.vscode-icons
 }
 
 function Install-Multimedia {
