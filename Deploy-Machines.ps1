@@ -250,6 +250,7 @@ function Install-WorkTools {
     # choco install onetastic
     # choco install russian-grammatical-dictionary
     choco install teamviewer
+    choco install todoist
     choco install xmind
 }
 
@@ -287,7 +288,6 @@ function Install-Gaming {
 
 function Install-DesktopOnly {
     # choco install zune
-    choco install todoist
     choco install defraggler
     choco install imgburn
     # choco install pstart
