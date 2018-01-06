@@ -197,7 +197,7 @@ function Install-Browsers {
 
 function Install-CommunicationTools {
     choco install mattermost-desktop
-    # choco install slack # Is in store
+    choco install slack # Is in store as well
     choco install skype
     choco install whatsapp
 }
