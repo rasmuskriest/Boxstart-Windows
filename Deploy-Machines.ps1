@@ -207,7 +207,7 @@ function Install-DevTools {
     choco install github-desktop
     choco install heidisql
     choco install sqlitebrowser
-    choco install choco install vmware-workstation-player # vmwareworkstation
+    choco install vmwareworkstation
     choco install winscp
 }
 
