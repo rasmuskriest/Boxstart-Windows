@@ -274,7 +274,7 @@ function Install-TechTools {
     choco install sysinternals
     choco install teracopy
     choco install windirstat
-    choco install winmerge
+    choco install winmerge-jp
     choco install wireshark
 }
 
