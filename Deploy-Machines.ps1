@@ -197,7 +197,7 @@ function Install-Browsers {
 
 function Install-CommunicationTools {
     choco install mattermost-desktop
-    # choco install slack # Is in store
+    choco install slack # Is in store as well
     choco install skype
     choco install whatsapp
 }
@@ -207,7 +207,7 @@ function Install-DevTools {
     choco install github-desktop
     choco install heidisql
     choco install sqlitebrowser
-    choco install choco install vmware-workstation-player # vmwareworkstation
+    choco install vmwareworkstation
     choco install winscp
 }
 
@@ -250,6 +250,7 @@ function Install-WorkTools {
     # choco install onetastic
     # choco install russian-grammatical-dictionary
     choco install teamviewer
+    choco install todoist
     choco install xmind
 }
 
@@ -287,7 +288,6 @@ function Install-Gaming {
 
 function Install-DesktopOnly {
     # choco install zune
-    choco install todoist
     choco install defraggler
     choco install imgburn
     # choco install pstart
