@@ -164,7 +164,6 @@ function Install-PowerShellModules {
     Install-Module Get-ChildItemColor -Scope CurrentUser
     Install-Module PSReadline -Scope CurrentUser -AllowClobber
     Install-Module posh-git -Scope CurrentUser -AllowClobber
-    Install-Module oh-my-posh -Scope CurrentUser -AllowClobber
     Install-Module z -Scope CurrentUser -AllowClobber
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Untrusted'
 }
@@ -261,6 +260,7 @@ function Install-TechTools {
     choco install fiddler
     choco install keepass
     choco install keepass-plugin-favicon
+    choco install linkshellextension
     choco install lockhunter
     choco install mp3tag
     # choco install multibootusb
