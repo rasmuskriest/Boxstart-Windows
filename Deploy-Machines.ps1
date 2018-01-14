@@ -161,6 +161,7 @@ function Install-PowerShellTools {
 
 function Install-PowerShellModules {
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Trusted'
+    Install-Module Get-ChildItemColor -Scope CurrentUser
     Install-Module PSReadline -Scope CurrentUser -AllowClobber
     Install-Module posh-git -Scope CurrentUser -AllowClobber
     Install-Module oh-my-posh -Scope CurrentUser -AllowClobber
