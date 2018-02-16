@@ -28,46 +28,40 @@ param
     $EnableWindowsAuthFeature
 )
 
-function Set-EnvironmentVariable
-{
+function Set-EnvironmentVariable {
     param
     (
         [String]
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         $Key,
 
         [String]
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         $Value
     )
 
     [Environment]::SetEnvironmentVariable($Key, $Value, "Machine") # for reboots
-	[Environment]::SetEnvironmentVariable($Key, $Value, "Process") # for right now
+    [Environment]::SetEnvironmentVariable($Key, $Value, "Process") # for right now
 
 }
 
-if ($InstallSurface)
-{
+if ($InstallSurface) {
     Set-EnvironmentVariable -Key "BoxStarter:InstallSurface" -Value "1"
 }
 
-if ($InstallDesktop)
-{
+if ($InstallDesktop) {
     Set-EnvironmentVariable -Key "BoxStarter:InstallDesktop" -Value "1"
 }
 
-if ($DataDrive)
-{
+if ($DataDrive) {
     Set-EnvironmentVariable -Key "BoxStarter:DataDrive" -Value $DataDrive
 }
 
-if ($SkipWindowsUpdate)
-{
+if ($SkipWindowsUpdate) {
     Set-EnvironmentVariable -Key "BoxStarter:SkipWindowsUpdate" -Value "1"
 }
 
-if ($EnableWindowsAuthFeature)
-{
+if ($EnableWindowsAuthFeature) {
     Set-EnvironmentVariable -Key "BoxStarter:EnableWindowsAuthFeature" -Value "1"
 }
 
