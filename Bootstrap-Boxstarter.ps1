@@ -18,14 +18,8 @@ param
     [String]
     $DataDrive,
 
-    [String]
-    $SourceCodeFolder,
-
     [Switch]
     $SkipWindowsUpdate,
-
-    [Switch]
-    $EnableWindowsAuthFeature
 )
 
 function Set-EnvironmentVariable {
