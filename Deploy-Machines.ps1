@@ -55,7 +55,7 @@ function Get-Checkpoint {
 }
 
 function Clear-Checkpoints {
-    $checkpointMarkers = Get-ChildItem Env: | where { $_.name -like "$checkpointPrefix*" } | Select -ExpandProperty name
+    $checkpointMarkers = Get-ChildItem Env: | Where-Object { $_.name -like "$checkpointPrefix*" } | Select-Object -ExpandProperty name
     foreach ($checkpointMarker in $checkpointMarkers) {
         [Environment]::SetEnvironmentVariable($checkpointMarker, '', "Machine")
         [Environment]::SetEnvironmentVariable($checkpointMarker, '', "Process")
