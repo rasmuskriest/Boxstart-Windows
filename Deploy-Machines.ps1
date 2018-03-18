@@ -154,7 +154,6 @@ function Install-HyperV {
 function Install-PowerShellTools {
     choco install conemu
     choco install gow
-    choco install pscx
     choco install pstools
     choco install openssh
 }
@@ -162,8 +161,9 @@ function Install-PowerShellTools {
 function Install-PowerShellModules {
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Trusted'
     Install-Module Get-ChildItemColor -Scope CurrentUser
-    Install-Module PSReadline -Scope CurrentUser -AllowClobber
     Install-Module posh-git -Scope CurrentUser -AllowClobber
+    Install-Module Pscx -Scope CurrentUser -AllowClobber
+    Install-Module PSReadline -Scope CurrentUser -AllowClobber
     Install-Module z -Scope CurrentUser -AllowClobber
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Untrusted'
 }
