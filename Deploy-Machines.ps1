@@ -284,6 +284,7 @@ function Install-Gaming {
     choco install goggalaxy
     choco install origin
     choco install steam
+    choco install twitch
     choco install uplay
 }
 
