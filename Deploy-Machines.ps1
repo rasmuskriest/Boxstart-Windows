@@ -189,17 +189,15 @@ function Install-Prerequisites {
 
 function Install-Browsers {
     choco install firefox -packageParameters "l=en-US"
-    choco install firefox-dev --pre
     choco install GoogleChrome
-    choco install GoogleChrome.Canary
     choco install tor-browser
 }
 
 function Install-CommunicationTools {
     choco install mattermost-desktop
-    choco install slack # Is in store as well
+    # choco install slack # Is in store
     choco install skype
-    choco install whatsapp
+    # choco install whatsapp # Is in store
 }
 
 function Install-DevTools {
