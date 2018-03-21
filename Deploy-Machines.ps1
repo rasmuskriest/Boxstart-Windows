@@ -143,6 +143,7 @@ function Install-WindowsFeatures {
     }
     dism /Online /Enable-Feature /FeatureName=LegacyComponents
     dism /Online /Enable-Feature /FeatureName=NetFx3
+    Add-WindowsCapability -Online -Name OpenSSH*
 
     if (Test-PendingReboot) { Invoke-Reboot }
 }
@@ -155,7 +156,6 @@ function Install-PowerShellTools {
     choco install conemu
     choco install gow
     choco install pstools
-    choco install openssh
 }
 
 function Install-PowerShellModules {
