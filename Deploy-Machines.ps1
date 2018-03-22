@@ -154,15 +154,15 @@ function Update-WindowsLibraries {
 
 function Install-WindowsFeatures {
     dism /Online /Enable-Feature /FeatureName=Microsoft-Windows-Subsystem-Linux
+    dism /Online /Enable-Feature /FeatureName=Microsoft-Hyper-V-All
     dism /Online /Enable-Feature /FeatureName=LegacyComponents
     dism /Online /Enable-Feature /FeatureName=NetFx3
     Add-WindowsCapability -Online -Name OpenSSH*
 
-    if (Test-PendingReboot) { Invoke-Reboot }
-}
+    Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile ~/Ubuntu.appx -UseBasicParsing
+    Add-AppxPackage -Path ~/Ubuntu.appx
 
-function Install-HyperV {
-    dism /Online /Enable-Feature /FeatureName=Microsoft-Hyper-V-All
+    if (Test-PendingReboot) { Invoke-Reboot }
 }
 
 function Install-PowerShellTools {
@@ -196,8 +196,6 @@ function Install-Prerequisites {
     choco install python2
     choco install quicktime
     choco install unchecky
-    choco install VirtualBox
-    choco install VirtualBox.ExtensionPack
 }
 
 function Install-Browsers {
@@ -217,13 +215,13 @@ function Install-DevTools {
     choco install android-sdk
     choco install heidisql
     choco install sqlitebrowser
-    choco install vmwareworkstation
     choco install winscp
 }
 
 function Install-Vagrant {
     choco install vagrant
     Update-Path
+    [Environment]::SetEnvironmentVariable("VAGRANT_DEFAULT_PROVIDER", "hyperv", "Machine")
 
     vagrant plugin install vagrant-hostsupdater
     vagrant plugin install vagrant-triggers
@@ -335,11 +333,7 @@ foreach ($installFunction in $installFunctionList) {
 if (Test-Path env:\BoxStarter:InstallDesktop) {
     Write-BoxstarterMessage "Installing desktop-only software"
 
-    # Hyper-V commented out because not used at the moment
-    # Use-Checkpoint -Function ${Function:Install-HyperV} -CheckpointName 'Install-HyperV' -SkipMessage 'Hyper-V already installed'
-    if (Test-PendingReboot) { Invoke-Reboot }
-
-    Use-Checkpoint -Function ${Function:Install-DesktopOnly} -CheckpointName 'InstallDesktopOnly' -SkipMessage 'InstallDesktopOnly already installed'
+    Use-Checkpoint -Function ${Function:Install-DesktopOnly} -CheckpointName 'InstallDesktopOnly' -SkipMessage 'Desktop-only software already installed'
     if (Test-PendingReboot) { Invoke-Reboot }
 }
 
