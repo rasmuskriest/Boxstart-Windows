@@ -178,7 +178,7 @@ function Install-Prerequisites {
     choco install javaruntime
     choco install jdk8
     choco install notepad2
-    choco install paint.net
+    # choco install paint.net # Is in store
     choco install python
     choco install python2
     choco install quicktime
