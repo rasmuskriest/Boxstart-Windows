@@ -256,6 +256,7 @@ function Install-TechTools {
     choco install ccleaner
     choco install doublecmd
     choco install fiddler
+    # choco install groupy
     choco install keepass
     choco install keepass-plugin-favicon
     choco install linkshellextension
@@ -265,7 +266,6 @@ function Install-TechTools {
     choco install nirlauncher
     choco install openvpn
     choco install putty
-    choco install qttabbar
     choco install recuva
     choco install reshack
     choco install royalts
