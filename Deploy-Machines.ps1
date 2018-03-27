@@ -118,7 +118,7 @@ function Enable-ChocolateyFeatures {
 function Set-BaseSettings {
     Enable-RemoteDesktop
     Set-CornerNavigationOptions -EnableUsePowerShellOnWinX
-    Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions -EnableShowFullPathInTitleBar
+    Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions
 }
 
 function Update-WindowsLibraries {
@@ -131,16 +131,13 @@ function Update-WindowsLibraries {
 
     Move-WindowsLibrary -libraryName "Personal" -newPath (Join-Path $dataDrive "Documents")
     Move-WindowsLibrary -libraryName "Downloads" -newPath (Join-Path $dataDrive "Downloads")
-    Move-WindowsLibrary -libraryName "My Music"     -newPath (Join-Path $dataDrive "Music")
-    Move-WindowsLibrary -libraryName "My Pictures"    -newPath (Join-Path $dataDrive "Pictures")
-    Move-WindowsLibrary -libraryName "My Video"    -newPath (Join-Path $dataDrive "Videos")
+    Move-WindowsLibrary -libraryName "My Music" -newPath (Join-Path $dataDrive "Music")
+    Move-WindowsLibrary -libraryName "My Pictures" -newPath (Join-Path $dataDrive "Pictures")
+    Move-WindowsLibrary -libraryName "My Video" -newPath (Join-Path $dataDrive "Videos")
 }
 
 function Install-WindowsFeatures {
-    $features = choco list --source windowsfeatures
-    if ($features | Where-Object {$_ -like "*Linux*"}) {
-        dism /Online /Enable-Feature /FeatureName=Microsoft-Windows-Subsystem-Linux
-    }
+    dism /Online /Enable-Feature /FeatureName=Microsoft-Windows-Subsystem-Linux
     dism /Online /Enable-Feature /FeatureName=LegacyComponents
     dism /Online /Enable-Feature /FeatureName=NetFx3
     Add-WindowsCapability -Online -Name OpenSSH*
@@ -314,34 +311,15 @@ function Update-Path {
 $dataDriveLetter = Get-DataDrive
 $dataDrive = "$dataDriveLetter`:"
 
-Use-Checkpoint -Function ${Function:Set-BaseSettings} -CheckpointName 'BaseSettings' -SkipMessage 'Base settings already configured'
-Use-Checkpoint -Function ${Function:Update-WindowsLibraries} -CheckpointName 'WindowsLibraries' -SkipMessage 'Libraries already moved'
+Use-Checkpoint -Function ${Function:Set-BaseSettings} -CheckpointName 'BaseSettings' -SkipMessage 'BaseSettings already configured'
+Use-Checkpoint -Function ${Function:Update-WindowsLibraries} -CheckpointName 'WindowsLibraries' -SkipMessage 'WindowsLibraries already moved'
 
-Write-BoxstarterMessage "Installing Windows Features"
-Use-Checkpoint -Function ${Function:Install-WindowsFeatures} -CheckpointName 'UserSettings' -SkipMessage 'User settings are already configured'
+$installFunctionList = @("WindowsFeatures", "Prerequisites", "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Multimedia", "WorkTools", "TechTools", "Gaming")
 
-
-Write-BoxstarterMessage "Starting software installation"
-
-Use-Checkpoint -Function ${Function:Install-Prerequisites} -CheckpointName 'Install-Prerequisites' -SkipMessage 'Prerequisites already installed'
-
-Use-Checkpoint -Function ${Function:Install-Browsers} -CheckpointName 'Install-Browsers' -SkipMessage 'Browsers already installed'
-
-Use-Checkpoint -Function ${Function:Install-CommunicationTools} -CheckpointName 'Install-CommunicationTools' -SkipMessage 'Communication tools already installed'
-
-Use-Checkpoint -Function ${Function:Install-DevTools} -CheckpointName 'Install-DevTools' -SkipMessage 'Development tools already installed'
-
-Use-Checkpoint -Function ${Function:Install-Vagrant} -CheckpointName 'Install-Vagrant' -SkipMessage 'Vagrant already installed'
-
-Use-Checkpoint -Function ${Function:Install-VisualStudioCode} -CheckpointName 'Install-VisualStudioCode' -SkipMessage 'Visual Studio Code already installed'
-
-Use-Checkpoint -Function ${Function:Install-Multimedia} -CheckpointName 'Install-Multimedia' -SkipMessage 'Multimedia software already installed'
-
-Use-Checkpoint -Function ${Function:Install-WorkTools} -CheckpointName 'Install-WorkTools' -SkipMessage 'Work tools software already installed'
-
-Use-Checkpoint -Function ${Function:Install-TechTools} -CheckpointName 'Install-TechTools' -SkipMessage 'Tech tools software already installed'
-
-Use-Checkpoint -Function ${Function:Install-Gaming} -CheckpointName 'Install-Gaming' -SkipMessage 'Gaming software software already installed'
+foreach ($installFunction in $installFunctionList) {
+    Write-BoxstarterMessage "Installing $installFunction"
+    Use-Checkpoint -Function ${Function:Install-$installFunction} -CheckpointName $installFunction -SkipMessage '$installFunction already installed'
+}
 
 if (Test-Path env:\BoxStarter:InstallDesktop) {
     Write-BoxstarterMessage "Installing desktop-only software"
@@ -350,20 +328,18 @@ if (Test-Path env:\BoxStarter:InstallDesktop) {
     # Use-Checkpoint -Function ${Function:Install-HyperV} -CheckpointName 'Install-HyperV' -SkipMessage 'Hyper-V already installed'
     if (Test-PendingReboot) { Invoke-Reboot }
 
-    Use-Checkpoint -Function ${Function:Install-DesktopOnly} -CheckpointName 'InstallDesktopOnly' -SkipMessage 'Desktop-only software already installed'
+    Use-Checkpoint -Function ${Function:Install-DesktopOnly} -CheckpointName 'InstallDesktopOnly' -SkipMessage 'InstallDesktopOnly already installed'
     if (Test-PendingReboot) { Invoke-Reboot }
 }
 
 if (Test-Path env:\BoxStarter:InstallSurface) {
     Write-BoxstarterMessage "Installing Surface-only software"
-
-    Use-Checkpoint -Function ${Function:Install-SurfaceOnly} -CheckpointName 'InstallSurfaceOnly' -SkipMessage 'Surface-only software already installed'
+    Use-Checkpoint -Function ${Function:Install-SurfaceOnly} -CheckpointName 'InstallSurfaceOnly' -SkipMessage 'InstallSurfaceOnly already installed'
     if (Test-PendingReboot) { Invoke-Reboot }
 }
 
 # Install Chocolatey as very last package
 choco install chocolatey
-
 # Change default Chocolatey behaviour
 Use-Checkpoint -Function ${Function:Enable-ChocolateyFeatures} -CheckpointName 'IntialiseChocolatey' -SkipMessage 'Chocolatey already configured'
 
@@ -371,6 +347,7 @@ if (Test-PendingReboot) { Invoke-Reboot }
 
 # Reload path
 Update-Path
+Set-Volume -DriveLetter $sytemDrive -NewFileSystemLabel "Windows"
 
 Use-Checkpoint -Function ${Function:Install-PowerShellModules} -CheckpointName 'PowerShellModules' -SkipMessage 'PowerShell modules already installed'
 

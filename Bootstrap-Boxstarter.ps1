@@ -19,7 +19,7 @@ param
     $DataDrive,
 
     [Switch]
-    $SkipWindowsUpdate,
+    $SkipWindowsUpdate = $false
 )
 
 function Set-EnvironmentVariable {
