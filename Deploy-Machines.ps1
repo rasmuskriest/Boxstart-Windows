@@ -13,6 +13,8 @@ $Boxstarter.RebootOk = $false
 $Boxstarter.NoPassword = $false
 $Boxstarter.AutoLogin = $true
 
+$installFunctionList = @("WindowsFeatures", "Prerequisites", "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Multimedia", "WorkTools", "TechTools", "Gaming")
+
 $checkpointPrefix = 'BoxStarter:Checkpoint:'
 
 function Get-CheckpointName {
@@ -98,6 +100,20 @@ function Get-DataDrive {
     }
 
     return $driveLetter
+}
+
+function Convert-StringToScriptBlock {
+    param(
+        [parameter(ValueFromPipeline = $true, Position = 0)]
+        [string]
+        $string
+    )
+    $sb = [scriptblock]::Create($string)
+    return $sb
+}
+
+function Update-Path {
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 }
 
 function Install-WindowsUpdate {
@@ -305,21 +321,16 @@ function ConfigureSoftware {
     git config --global user.email "rasmusk@outlook.com"
 }
 
-function Update-Path {
-    $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
-}
-
 $dataDriveLetter = Get-DataDrive
 $dataDrive = "$dataDriveLetter`:"
 
 Use-Checkpoint -Function ${Function:Set-BaseSettings} -CheckpointName 'BaseSettings' -SkipMessage 'BaseSettings already configured'
 Use-Checkpoint -Function ${Function:Update-WindowsLibraries} -CheckpointName 'WindowsLibraries' -SkipMessage 'WindowsLibraries already moved'
 
-$installFunctionList = @("WindowsFeatures", "Prerequisites", "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Multimedia", "WorkTools", "TechTools", "Gaming")
-
 foreach ($installFunction in $installFunctionList) {
     Write-BoxstarterMessage "Installing $installFunction"
-    Use-Checkpoint -Function ${Function:Install-$installFunction} -CheckpointName $installFunction -SkipMessage '$installFunction already installed'
+    $forwardFunction = Convert-StringToScriptBlock "Install-$installFunction"
+    Use-Checkpoint -Function $forwardFunction -CheckpointName $installFunction -SkipMessage '$installFunction already installed'
 }
 
 if (Test-Path env:\BoxStarter:InstallDesktop) {
