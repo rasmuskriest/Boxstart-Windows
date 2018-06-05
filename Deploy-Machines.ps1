@@ -166,6 +166,7 @@ function Install-WindowsFeatures {
 }
 
 function Install-PowerShellTools {
+    choco install au
     choco install conemu
     choco install gow
     choco install pstools
@@ -265,6 +266,7 @@ function Install-WorkTools {
 
 function Install-TechTools {
     choco install ccleaner
+    choco install docker-for-windows
     choco install doublecmd
     choco install fiddler
     # choco install groupy
