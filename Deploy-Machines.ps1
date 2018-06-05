@@ -226,7 +226,6 @@ function Install-Vagrant {
 
     vagrant plugin install vagrant-hostsupdater
     vagrant plugin install vagrant-triggers
-    vagrant plugin install vagrant-vbguest
 }
 
 function Install-VisualStudioCode {
