@@ -251,7 +251,7 @@ function Install-WorkTools {
     choco install adobe-creative-cloud # ps,ai,id,lr,acrobat
     # choco install cisco-anyconnect
     # choco install citavi
-    # choco install elsterformular
+    choco install elsterformular
     # choco install evernote # Is in store
     # choco install instagiffer
     choco install Office365HomePremium
