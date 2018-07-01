@@ -191,6 +191,7 @@ function Install-Prerequisites {
     choco install google-backup-and-sync
     choco install javaruntime
     choco install jdk8
+    choco install lame
     choco install notepad2
     # choco install paint.net # Is in store
     choco install python
@@ -299,8 +300,9 @@ function Install-Gaming {
 }
 
 function Install-DesktopOnly {
-    # choco install zune
+    choco install dopamine
     choco install defraggler
+    choco install eac
     choco install imgburn
     # choco install pstart
     choco install gamesavemanager
