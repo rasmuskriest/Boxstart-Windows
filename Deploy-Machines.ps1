@@ -241,9 +241,9 @@ function Install-VisualStudioCode {
 function Install-Multimedia {
     # choco install amazonmusic
     choco install jdownloader -pre
-    choco install mpc-be
     # choco install spotify # Is in store
     choco install transmission
+    choco install vlc
     choco install xmedia-recode
 }
 
