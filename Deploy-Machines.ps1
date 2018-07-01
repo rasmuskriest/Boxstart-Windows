@@ -239,7 +239,7 @@ function Install-VisualStudioCode {
 }
 
 function Install-Multimedia {
-    # choco install amazonmusic
+    # choco install amazonmusic # Is in store
     choco install jdownloader -pre
     # choco install spotify # Is in store
     choco install transmission
@@ -256,7 +256,7 @@ function Install-WorkTools {
     # choco install instagiffer
     choco install Office365HomePremium
     choco install outlookcaldav
-    # choco install onetastic
+    choco install onetastic
     # choco install russian-grammatical-dictionary
     choco install teamviewer
     choco install todoist
@@ -309,7 +309,7 @@ function Install-DesktopOnly {
 }
 
 function Install-SurfaceOnly {
-    # choco install OfficeRemote
+    choco install officeremote
     choco install wifi-manager
 }
 
