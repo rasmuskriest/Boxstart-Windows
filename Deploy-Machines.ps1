@@ -13,9 +13,33 @@ $Boxstarter.RebootOk = $false
 $Boxstarter.NoPassword = $false
 $Boxstarter.AutoLogin = $true
 
+# List of all functions that are part of every installation.
 $installFunctionList = @("WindowsFeatures", "Prerequisites", "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Multimedia", "WorkTools", "TechTools", "Gaming")
 
+# Contents of these lists are looped as individual packages / modules.
+$installWindowsFeaturesDismList = @("Microsoft-Windows-Subsystem-Linux", "Microsoft-Hyper-V-All", "LegacyComponents")
+$addWindowsCapabilityList = @("OpenSSH*")
+$installPowerShellToolsList = @("au", "conemu", "gow", "pstools")
+$installPowerShellModulesList = @("Get-ChildItemColor", "posh-git", "Pscx", "PSReadline", "z")
+$installPrerequisitesList = @("7zip", "dropbox", "flashplayerplugin", "git", "google-drive-file-stream", "google-backup-and-sync", "javaruntime", "jdk8", "lame", "notepad2", "python", "python2", "quicktime", "unchecky")
+$installBrowsersList = @("firefox -packageParameters 'l=en-US'", "GoogleChrome", "tor-browser")
+$installCommunicationToolsList = @("mattermost-desktop", "skype")
+$installDevToolsList = @("android-sdk", "heidisql", "sqlistebrowser", "winscp")
+$installMultimediaList = @("jdownloader -pre", "transmission", "vlc", "xmedia-recode")
+$installWorkToolsList = @("adobe-creative-cloud", "elsterformular", "Office365HomePremium", "outlookcaldav", "onetastic", "teamviewer", "todoist", "xmind")
+$installTechToolsList = @("ccleaner", "docker-for-windows", "doublecmd", "fiddler", "keepass", "keepass-plugin-favicon", "linkshellextension", "lockhunter", "mp3tag", "nirlauncher", "openvpn", "putty", "recuva", "reshack", "royalts", "rufus", "speccy", "sysinternals", "teracopy", "windirstat", "winmerge-jp", "wireshark")
+$installGamingList = @("goggalaxy", "origin", "steam", "twitch", "uplay")
+
+# Specific lists for different systems.
+$installDesktopOnlyList = @("dopamine", "defraggler", "eac", "imgburn", "gamesavemanager", "geforce-experience", "Physx.Legacy")
+$installSurfaceOnlyList = @("officeremote", "wifi-manager")
+
+# $storeAppsList @("amazonmusic", "evernote", "paint.net", "slack", "spotify", "whatsapp")
+# $notAvailableList = @("cisco-anyconnect", "citavi", "instagiffer", "groupy", "multibootusb", "russian-grammatical-dictionary", "pstart")
+
 $checkpointPrefix = 'BoxStarter:Checkpoint:'
+
+# WFunctions to handle checkpoints.
 
 function Get-CheckpointName {
     param
@@ -88,6 +112,8 @@ function Use-Checkpoint {
     }
 }
 
+# Functions to handle drives.
+
 function Get-SystemDrive {
     return $env:SystemDrive[0]
 }
@@ -101,6 +127,8 @@ function Get-DataDrive {
 
     return $driveLetter
 }
+
+# Necessary functions to run script.
 
 function Convert-StringToScriptBlock {
     param(
@@ -116,6 +144,10 @@ function Update-Path {
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 }
 
+function Install-ChocoPackage {
+    choco install $args
+}
+
 function Install-WindowsUpdate {
     if (Test-Path env:\BoxStarter:SkipWindowsUpdate) {
         return
@@ -125,6 +157,8 @@ function Install-WindowsUpdate {
     Install-WindowsUpdate -AcceptEula
     #if (Test-PendingReboot) { Invoke-Reboot }
 }
+
+# Beginning of specific functions for this install.
 
 function Enable-ChocolateyFeatures {
     choco feature enable --name=autoUninstaller
@@ -152,12 +186,16 @@ function Update-WindowsLibraries {
     Move-WindowsLibrary -libraryName "My Video" -newPath (Join-Path $dataDrive "Videos")
 }
 
+# While many functions might seem similiar, they are handeled individually to allow for additional commands, i.e. set policies.
+
 function Install-WindowsFeatures {
-    dism /Online /Enable-Feature /FeatureName=Microsoft-Windows-Subsystem-Linux
-    dism /Online /Enable-Feature /FeatureName=Microsoft-Hyper-V-All
-    dism /Online /Enable-Feature /FeatureName=LegacyComponents
-    dism /Online /Enable-Feature /FeatureName=NetFx3
-    Add-WindowsCapability -Online -Name OpenSSH*
+    foreach ($dismFeature in $installWindowsFeaturesDismList) {
+        dism /Online /Enable-Feature /FeatureName=$dismFeature
+    }
+
+    foreach ($windowsCapability in $addWindowsCapabilityList) {
+        Add-WindowsCapability -Online -Name $windowsCapability
+    }
 
     Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile ~/Ubuntu.appx -UseBasicParsing
     Add-AppxPackage -Path ~/Ubuntu.appx
@@ -166,58 +204,43 @@ function Install-WindowsFeatures {
 }
 
 function Install-PowerShellTools {
-    choco install au
-    choco install conemu
-    choco install gow
-    choco install pstools
+    foreach ($package in $installPowerShellToolsList) {
+        Install-ChocoPackage $package
+    }
 }
 
 function Install-PowerShellModules {
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Trusted'
-    Install-Module Get-ChildItemColor -Scope CurrentUser
-    Install-Module posh-git -Scope CurrentUser -AllowClobber
-    Install-Module Pscx -Scope CurrentUser -AllowClobber
-    Install-Module PSReadline -Scope CurrentUser -AllowClobber
-    Install-Module z -Scope CurrentUser -AllowClobber
+
+    foreach ($module in $installPowerShellModulesList) {
+        Install-Module $module -Scope CurrentUser
+    }
+
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Untrusted'
 }
 
 function Install-Prerequisites {
-    choco install 7zip
-    choco install dropbox
-    choco install flashplayerplugin
-    choco install git
-    choco install google-drive-file-stream
-    choco install google-backup-and-sync
-    choco install javaruntime
-    choco install jdk8
-    choco install lame
-    choco install notepad2
-    # choco install paint.net # Is in store
-    choco install python
-    choco install python2
-    choco install quicktime
-    choco install unchecky
+    foreach ($package in $installPrerequisitesList) {
+        Install-ChocoPackage $package
+    }
 }
 
 function Install-Browsers {
-    choco install firefox -packageParameters "l=en-US"
-    choco install GoogleChrome
-    choco install tor-browser
+    foreach ($package in $installBrowsersList) {
+        Install-ChocoPackage $package
+    }
 }
 
 function Install-CommunicationTools {
-    choco install mattermost-desktop
-    # choco install slack # Is in store
-    choco install skype
-    # choco install whatsapp # Is in store
+    foreach ($package in $installCommunicationToolsList) {
+        Install-ChocoPackage $package
+    }
 }
 
 function Install-DevTools {
-    choco install android-sdk
-    choco install heidisql
-    choco install sqlitebrowser
-    choco install winscp
+    foreach ($package in $installDevToolsList) {
+        Install-ChocoPackage $package
+    }
 }
 
 function Install-Vagrant {
@@ -240,80 +263,42 @@ function Install-VisualStudioCode {
 }
 
 function Install-Multimedia {
-    # choco install amazonmusic # Is in store
-    choco install jdownloader -pre
-    # choco install spotify # Is in store
-    choco install transmission
-    choco install vlc
-    choco install xmedia-recode
+    foreach ($package in $installMultimediaList) {
+        Install-ChocoPackage $package
+    }
 }
 
 function Install-WorkTools {
-    choco install adobe-creative-cloud # ps,ai,id,lr,acrobat
-    # choco install cisco-anyconnect
-    # choco install citavi
-    choco install elsterformular
-    # choco install evernote # Is in store
-    # choco install instagiffer
-    choco install Office365HomePremium
-    choco install outlookcaldav
-    choco install onetastic
-    # choco install russian-grammatical-dictionary
-    choco install teamviewer
-    choco install todoist
-    choco install xmind
+    foreach ($package in $installWorkToolsList) {
+        Install-ChocoPackage $package
+    }
 }
 
 function Install-TechTools {
-    choco install ccleaner
-    choco install docker-for-windows
-    choco install doublecmd
-    choco install fiddler
-    # choco install groupy
-    choco install keepass
-    choco install keepass-plugin-favicon
-    choco install linkshellextension
-    choco install lockhunter
-    choco install mp3tag
-    # choco install multibootusb
-    choco install nirlauncher
-    choco install openvpn
-    choco install putty
-    choco install recuva
-    choco install reshack
-    choco install royalts
-    choco install rufus
-    choco install speccy
-    choco install sysinternals
-    choco install teracopy
-    choco install windirstat
-    choco install winmerge-jp
-    choco install wireshark
+    foreach ($package in $installTechToolsList) {
+        Install-ChocoPackage $package
+    }
 }
 
 function Install-Gaming {
-    choco install goggalaxy
-    choco install origin
-    choco install steam
-    choco install twitch
-    choco install uplay
+    foreach ($package in $installGamingList) {
+        Install-ChocoPackage $package
+    }
 }
 
 function Install-DesktopOnly {
-    choco install dopamine
-    choco install defraggler
-    choco install eac
-    choco install imgburn
-    # choco install pstart
-    choco install gamesavemanager
-    choco install geforce-experience
-    choco install Physx.Legacy
+    foreach ($package in $installDesktopOnlyList) {
+        Install-ChocoPackage $package
+    }
 }
 
 function Install-SurfaceOnly {
-    choco install officeremote
-    choco install wifi-manager
+    foreach ($package in $installSurfaceOnlyList) {
+        Install-ChocoPackage $package
+    }
 }
+
+# Configuration functions.
 
 function ConfigureSoftware {
     git config --global core.editor "nano"
@@ -323,6 +308,8 @@ function ConfigureSoftware {
 
 $dataDriveLetter = Get-DataDrive
 $dataDrive = "$dataDriveLetter`:"
+
+# This is where the actual script starts.
 
 Use-Checkpoint -Function ${Function:Set-BaseSettings} -CheckpointName 'BaseSettings' -SkipMessage 'BaseSettings already configured'
 Use-Checkpoint -Function ${Function:Update-WindowsLibraries} -CheckpointName 'WindowsLibraries' -SkipMessage 'WindowsLibraries already moved'
