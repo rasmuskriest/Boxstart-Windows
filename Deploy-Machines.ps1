@@ -27,7 +27,7 @@ $installCommunicationToolsList = @("mattermost-desktop", "skype")
 $installDevToolsList = @("android-sdk", "heidisql", "sqlistebrowser", "winscp")
 $installMultimediaList = @("jdownloader -pre", "transmission", "vlc", "xmedia-recode")
 $installWorkToolsList = @("adobe-creative-cloud", "elsterformular", "Office365HomePremium", "outlookcaldav", "onetastic", "teamviewer", "todoist", "xmind")
-$installTechToolsList = @("ccleaner", "docker-for-windows", "doublecmd", "fiddler", "keepass", "keepass-plugin-favicon", "linkshellextension", "lockhunter", "mp3tag", "nirlauncher", "openvpn", "putty", "recuva", "reshack", "royalts", "rufus", "speccy", "sysinternals", "teracopy", "windirstat", "winmerge-jp", "wireshark")
+$installTechToolsList = @("docker-for-windows", "doublecmd", "fiddler", "keepass", "keepass-plugin-favicon", "linkshellextension", "lockhunter", "mp3tag", "nirlauncher", "openvpn", "putty", "recuva", "reshack", "royalts", "rufus", "speccy", "sysinternals", "teracopy", "testdisk-photorec", "windirstat", "winmerge-jp", "wireshark")
 $installGamingList = @("goggalaxy", "origin", "steam", "twitch", "uplay")
 
 # Specific lists for different systems.
