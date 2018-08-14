@@ -190,7 +190,7 @@ function Update-WindowsLibraries {
 
 function Install-WindowsFeatures {
     foreach ($dismFeature in $installWindowsFeaturesDismList) {
-        dism /Online /Enable-Feature /FeatureName=$dismFeature
+        dism /Online /Enable-Feature /FeatureName=$dismFeature /NoRestart
     }
 
     foreach ($windowsCapability in $addWindowsCapabilityList) {
