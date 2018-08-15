@@ -197,7 +197,7 @@ function Install-WindowsFeatures {
         Add-WindowsCapability -Online -Name $windowsCapability
     }
 
-    Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile ~/Ubuntu.appx -UseBasicParsing
+    Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu -OutFile ~/Ubuntu.appx -UseBasicParsing
     Add-AppxPackage -Path ~/Ubuntu.appx
 
     if (Test-PendingReboot) { Invoke-Reboot }
