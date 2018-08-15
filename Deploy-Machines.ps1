@@ -213,7 +213,7 @@ function Install-PowerShellModules {
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Trusted'
 
     foreach ($module in $installPowerShellModulesList) {
-        Install-Module $module -Scope CurrentUser
+        Install-Module $module -Scope CurrentUser -AllowClobber
     }
 
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Untrusted'
