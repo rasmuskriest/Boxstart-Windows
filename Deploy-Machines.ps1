@@ -24,7 +24,7 @@ $installPowerShellModulesList = @("Get-ChildItemColor", "posh-git", "Pscx", "PSR
 $installPrerequisitesList = @("7zip", "dropbox", "flashplayerplugin", "git", "google-drive-file-stream", "google-backup-and-sync", "javaruntime", "jdk8", "lame", "notepad3", "python", "python2", "quicktime", "unchecky")
 $installBrowsersList = @("firefox -packageParameters 'l=en-US'", "GoogleChrome", "tor-browser")
 $installCommunicationToolsList = @("mattermost-desktop", "skype")
-$installDevToolsList = @("android-sdk", "heidisql", "sqlistebrowser", "winscp")
+$installDevToolsList = @("android-sdk", "sqlistebrowser", "winscp")
 $installMultimediaList = @("jdownloader -pre", "transmission", "vlc", "xmedia-recode")
 $installWorkToolsList = @("adobe-creative-cloud", "elsterformular", "Office365HomePremium", "outlookcaldav", "onetastic", "teamviewer", "todoist", "xmind")
 $installTechToolsList = @("docker-for-windows", "doublecmd", "fiddler", "keepass", "keepass-plugin-favicon", "linkshellextension", "lockhunter", "mp3tag", "nirlauncher", "openvpn", "putty", "recuva", "reshack", "royalts", "rufus", "speccy", "sysinternals", "teracopy", "testdisk-photorec", "windirstat", "winmerge-jp", "wireshark")
@@ -34,8 +34,8 @@ $installGamingList = @("goggalaxy", "origin", "steam", "twitch", "uplay")
 $installDesktopOnlyList = @("dopamine", "defraggler", "eac", "imgburn", "gamesavemanager", "geforce-experience", "Physx.Legacy")
 $installSurfaceOnlyList = @("officeremote", "wifi-manager")
 
-# $storeAppsList @("amazonmusic", "evernote", "paint.net", "slack", "spotify", "whatsapp")
-# $notAvailableList = @("cisco-anyconnect", "citavi", "instagiffer", "groupy", "multibootusb", "russian-grammatical-dictionary", "pstart")
+# $storeAppsList @("amazonmusic", "ditto", "evernote", "heidisql", "paint.net", "slack", "spotify", "whatsapp")
+# $notAvailableList = @("cisco-anyconnect", "citavi", "instagiffer", "groupy", "mailbird", "multibootusb", "russian-grammatical-dictionary", "pstart")
 
 $checkpointPrefix = 'BoxStarter:Checkpoint:'
 
