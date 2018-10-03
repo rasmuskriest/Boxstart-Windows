@@ -19,7 +19,7 @@ $installFunctionList = @("WindowsFeatures", "Prerequisites", "Browsers", "Commun
 # Contents of these lists are looped as individual packages / modules.
 $installWindowsFeaturesDismList = @("Microsoft-Windows-Subsystem-Linux", "Microsoft-Hyper-V-All", "LegacyComponents")
 $addWindowsCapabilityList = @("OpenSSH*")
-$installPowerShellToolsList = @("au", "conemu", "gow", "pstools")
+$installPowerShellToolsList = @("au", "conemu", "gow", "pstools", "vcxsrv")
 $installPowerShellModulesList = @("Get-ChildItemColor", "posh-git", "Pscx", "PSReadline", "z")
 $installPrerequisitesList = @("7zip", "dropbox", "flashplayerplugin", "git", "google-drive-file-stream", "insync", "javaruntime", "jdk8", "lame", "notepad3", "python", "python2", "quicktime", "unchecky")
 $installBrowsersList = @("firefox -packageParameters 'l=en-US'", "GoogleChrome", "tor-browser")
