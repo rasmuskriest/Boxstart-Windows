@@ -21,7 +21,7 @@ $installWindowsFeaturesDismList = @("Microsoft-Windows-Subsystem-Linux", "Micros
 $addWindowsCapabilityList = @("OpenSSH*")
 $installPowerShellToolsList = @("au", "conemu", "gow", "pstools")
 $installPowerShellModulesList = @("Get-ChildItemColor", "posh-git", "Pscx", "PSReadline", "z")
-$installPrerequisitesList = @("7zip", "dropbox", "flashplayerplugin", "git", "google-drive-file-stream", "google-backup-and-sync", "javaruntime", "jdk8", "lame", "notepad3", "python", "python2", "quicktime", "unchecky")
+$installPrerequisitesList = @("7zip", "dropbox", "flashplayerplugin", "git", "google-drive-file-stream", "insync", "javaruntime", "jdk8", "lame", "notepad3", "python", "python2", "quicktime", "unchecky")
 $installBrowsersList = @("firefox -packageParameters 'l=en-US'", "GoogleChrome", "tor-browser")
 $installCommunicationToolsList = @("mattermost-desktop", "skype")
 $installDevToolsList = @("android-sdk", "sqlistebrowser", "winscp")
