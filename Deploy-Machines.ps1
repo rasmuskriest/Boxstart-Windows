@@ -24,7 +24,7 @@ $installPowerShellModulesList = @("Get-ChildItemColor", "posh-git", "Pscx", "PSR
 $installPrerequisitesList = @("1password", "7zip", "dropbox", "flashplayerplugin", "git", "google-drive-file-stream", "insync", "javaruntime", "jdk8", "lame", "notepad3", "python", "python2", "quicktime", "unchecky")
 $installBrowsersList = @("firefox -packageParameters 'l=en-US'", "GoogleChrome", "tor-browser")
 $installCommunicationToolsList = @("mattermost-desktop", "skype")
-$installDevToolsList = @("android-sdk", "sqlistebrowser", "winscp")
+$installDevToolsList = @("android-sdk", "sqlitebrowser", "winscp")
 $installMultimediaList = @("jdownloader -pre", "transmission", "vlc", "xmedia-recode")
 $installWorkToolsList = @("adobe-creative-cloud", "elsterformular", "Office365HomePremium", "outlookcaldav", "onetastic", "teamviewer", "todoist", "xmind")
 $installTechToolsList = @("docker-for-windows", "doublecmd", "fiddler", "keepass", "keepass-plugin-favicon", "linkshellextension", "lockhunter", "mp3tag", "nirlauncher", "openvpn", "putty", "recuva", "reshack", "royalts", "rufus", "speccy", "sysinternals", "teracopy", "testdisk-photorec", "windirstat", "winmerge-jp", "wireshark")
