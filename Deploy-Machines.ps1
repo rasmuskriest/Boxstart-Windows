@@ -313,6 +313,7 @@ $dataDrive = "$dataDriveLetter`:"
 
 Use-Checkpoint -Function ${Function:Set-BaseSettings} -CheckpointName 'BaseSettings' -SkipMessage 'BaseSettings already configured'
 Use-Checkpoint -Function ${Function:Update-WindowsLibraries} -CheckpointName 'WindowsLibraries' -SkipMessage 'WindowsLibraries already moved'
+Use-Checkpoint -Function ${Function:Install-PowerShellTools} -CheckpointName 'PowerShellTools' -SkipMessage 'PowerShellTools already installed'
 
 foreach ($installFunction in $installFunctionList) {
     Write-BoxstarterMessage "Installing $installFunction"
