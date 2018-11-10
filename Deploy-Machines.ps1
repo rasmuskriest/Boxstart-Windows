@@ -253,7 +253,7 @@ function Install-Vagrant {
 }
 
 function Install-VisualStudioCode {
-    choco install visualstudiocode
+    choco install vscode
 
     Start-Process code
     Start-Sleep -s 10
