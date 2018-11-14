@@ -34,7 +34,7 @@ $installGamingList = @("goggalaxy", "origin", "steam", "twitch", "uplay")
 $installDesktopOnlyList = @("dopamine", "defraggler", "eac", "imgburn", "gamesavemanager", "geforce-experience", "Physx.Legacy")
 $installSurfaceOnlyList = @("officeremote", "wifi-manager")
 
-# $storeAppsList @("amazonmusic", "ditto", "evernote", "heidisql", "Office365HomePremium", "paint.net", "slack", "spotify", "whatsapp")
+# $storeAppsList @("amazonmusic", "evernote", "heidisql", "Office365HomePremium", "paint.net", "slack", "spotify", "whatsapp")
 # $notAvailableList = @("cisco-anyconnect", "citavi", "instagiffer", "groupy", "mailbird", "multibootusb", "notion", "russian-grammatical-dictionary", "pstart")
 
 $checkpointPrefix = 'BoxStarter:Checkpoint:'
