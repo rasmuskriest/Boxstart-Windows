@@ -196,9 +196,10 @@ function Install-WindowsFeatures {
     foreach ($windowsCapability in $addWindowsCapabilityList) {
         Add-WindowsCapability -Online -Name $windowsCapability
     }
-
-    Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu -OutFile ~/Ubuntu.appx -UseBasicParsing
-    Add-AppxPackage -Path ~/Ubuntu.appx
+    
+    # See https://docs.microsoft.com/en-us/windows/wsl/install-manual
+    # Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu -OutFile ~/Ubuntu.appx -UseBasicParsing
+    # Add-AppxPackage -Path ~/Ubuntu.appx
 
     if (Test-PendingReboot) { Invoke-Reboot }
 }
