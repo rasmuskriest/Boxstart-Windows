@@ -32,7 +32,7 @@ $installGamingList = @("goggalaxy", "origin", "steam", "twitch", "uplay")
 
 # Specific lists for different systems.
 $installDesktopOnlyList = @("dopamine", "defraggler", "eac", "imgburn", "gamesavemanager", "geforce-experience", "Physx.Legacy")
-$installSurfaceOnlyList = @("officeremote", "wifi-manager")
+$installSurfaceOnlyList = @("wifi-manager")
 
 # $storeAppsList @("amazonmusic", "evernote", "heidisql", "Office365HomePremium", "paint.net", "slack", "spotify", "whatsapp")
 # $notAvailableList = @("cisco-anyconnect", "citavi", "instagiffer", "groupy", "mailbird", "multibootusb", "notion", "russian-grammatical-dictionary", "pstart")
