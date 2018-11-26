@@ -198,8 +198,8 @@ function Install-WindowsFeatures {
     }
     
     # See https://docs.microsoft.com/en-us/windows/wsl/install-manual
-    # Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu -OutFile ~/Ubuntu.appx -UseBasicParsing
-    # Add-AppxPackage -Path ~/Ubuntu.appx
+    Invoke-WebRequest -Uri https://aka.ms/wsl-debian-gnulinux -OutFile ~/Downloads/Debian.appx -UseBasicParsing
+    Add-AppxPackage -Path ~/Downloads/Debian.appx
 
     if (Test-PendingReboot) { Invoke-Reboot }
 }
