@@ -249,8 +249,8 @@ function Install-Vagrant {
     Update-Path
     [Environment]::SetEnvironmentVariable("VAGRANT_DEFAULT_PROVIDER", "hyperv", "Machine")
 
-    vagrant plugin install vagrant-hostsupdater
-    vagrant plugin install vagrant-triggers
+    vagrant plugin install sahara # needed for chocolatey-test-environment
+    vagrant plugin install vagrant-hostsupdater # needed for most boxes that are to be reached from the host
 }
 
 function Install-VisualStudioCode {
