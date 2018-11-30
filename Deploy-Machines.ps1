@@ -27,7 +27,7 @@ $installCommunicationToolsList = @("mattermost-desktop", "skype")
 $installDevToolsList = @("android-sdk", "sqlitebrowser", "winscp")
 $installMultimediaList = @("jdownloader -pre", "transmission", "vlc", "xmedia-recode")
 $installWorkToolsList = @("adobe-creative-cloud", "elsterformular", "outlookcaldav", "onenote", "onetastic", "teamviewer", "todoist", "xmind")
-$installTechToolsList = @("docker-for-windows", "doublecmd", "fiddler", "keepass", "keepass-plugin-favicon", "linkshellextension", "lockhunter", "mp3tag", "nirlauncher", "openvpn", "putty", "recuva", "reshack", "royalts", "rufus", "speccy", "sysinternals", "teracopy", "testdisk-photorec", "windirstat", "winmerge-jp", "wireshark")
+$installTechToolsList = @("docker-for-windows", "doublecmd", "fiddler", "groupy", "keepass", "keepass-plugin-favicon", "linkshellextension", "lockhunter", "mp3tag", "nirlauncher", "openvpn", "putty", "recuva", "reshack", "royalts", "rufus", "speccy", "sysinternals", "teracopy", "testdisk-photorec", "windirstat", "winmerge-jp", "wireshark")
 $installGamingList = @("goggalaxy", "origin", "steam", "twitch", "uplay")
 
 # Specific lists for different systems.
@@ -35,7 +35,7 @@ $installDesktopOnlyList = @("dopamine", "defraggler", "eac", "imgburn", "gamesav
 $installSurfaceOnlyList = @("wifi-manager")
 
 # $storeAppsList @("amazonmusic", "evernote", "heidisql", "Office365HomePremium", "paint.net", "slack", "spotify", "whatsapp")
-# $notAvailableList = @("cisco-anyconnect", "citavi", "instagiffer", "groupy", "mailbird", "multibootusb", "notion", "russian-grammatical-dictionary", "pstart")
+# $notAvailableList = @("cisco-anyconnect", "citavi", "instagiffer", "multibootusb", "notion", "russian-grammatical-dictionary", "pstart")
 
 $checkpointPrefix = 'BoxStarter:Checkpoint:'
 
