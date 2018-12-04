@@ -17,18 +17,18 @@ $Boxstarter.AutoLogin = $true
 $installFunctionList = @("WindowsFeatures", "Prerequisites", "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Atom", "Multimedia", "WorkTools", "EducationTools", "TechTools", "Gaming")
 
 # Contents of these lists are looped as individual packages / modules.
-$installWindowsFeaturesDismList = @("Microsoft-Windows-Subsystem-Linux", "Microsoft-Hyper-V-All", "LegacyComponents")
+$installWindowsFeaturesDismList = @("Microsoft-Windows-Subsystem-Linux", "LegacyComponents") # Microsoft-Hyper-V-All is currently removed
 $addWindowsCapabilityList = @("OpenSSH*")
 $installPowerShellToolsList = @("au", "conemu", "gow", "pstools", "vcxsrv")
 $installPowerShellModulesList = @("Get-ChildItemColor", "posh-git", "Pscx", "PSReadline", "z")
-$installPrerequisitesList = @("1password", "7zip", "dropbox", "flashplayerplugin", "git", "google-drive-file-stream", "google-backup-and-sync", "javaruntime", "jdk8", "lame", "notepad3", "python", "python2", "quicktime", "strawberryperl", "unchecky")
+$installPrerequisitesList = @("1password", "7zip", "dropbox", "flashplayerplugin", "git", "google-drive-file-stream", "google-backup-and-sync", "javaruntime", "jdk8", "lame", "notepad3", "python", "python2", "quicktime", "strawberryperl", "unchecky", "virtualbox", "VirtualBox.ExtensionPack", "vmwareworkstation")
 $installBrowsersList = @("firefox -packageParameters 'l=en-US'", "GoogleChrome", "tor-browser", "vivaldi")
 $installCommunicationToolsList = @("mattermost-desktop", "skype")
 $installDevToolsList = @("android-sdk", "sqlitebrowser", "winscp")
 $installMultimediaList = @("jdownloader -pre", "transmission", "vlc", "xmedia-recode")
 $installWorkToolsList = @("adobe-creative-cloud", "elsterformular", "outlookcaldav", "onenote", "onetastic", "teamviewer", "todoist")
 $installEducationToolsList = @("miktek", "R.Project", "R.Studio", "russian-grammatical-dictionary", "xmind" "zotero")
-$installTechToolsList = @("docker-for-windows", "doublecmd", "fiddler", "groupy", "keepass", "keepass-plugin-favicon", "linkshellextension", "lockhunter", "mp3tag", "nirlauncher", "openvpn", "putty", "recuva", "reshack", "royalts", "rufus", "speccy", "sysinternals", "teracopy", "testdisk-photorec", "windirstat", "winmerge-jp", "wireshark")
+$installTechToolsList = @("docker-toolbox", "doublecmd", "fiddler", "groupy", "keepass", "keepass-plugin-favicon", "linkshellextension", "lockhunter", "mp3tag", "nirlauncher", "openvpn", "putty", "recuva", "reshack", "royalts", "rufus", "speccy", "sysinternals", "teracopy", "testdisk-photorec", "windirstat", "winmerge-jp", "wireshark")
 $installGamingList = @("goggalaxy", "origin", "steam", "twitch", "uplay")
 
 # Specific lists for different systems.
@@ -248,7 +248,7 @@ function Install-DevTools {
 function Install-Vagrant {
     choco install vagrant
     Update-Path
-    [Environment]::SetEnvironmentVariable("VAGRANT_DEFAULT_PROVIDER", "hyperv", "Machine")
+    # [Environment]::SetEnvironmentVariable("VAGRANT_DEFAULT_PROVIDER", "hyperv", "Machine")
 
     vagrant plugin install sahara # needed for chocolatey-test-environment
     vagrant plugin install vagrant-hostsupdater # needed for most boxes that are to be reached from the host
