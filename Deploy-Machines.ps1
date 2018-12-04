@@ -14,7 +14,7 @@ $Boxstarter.NoPassword = $false
 $Boxstarter.AutoLogin = $true
 
 # List of all functions that are part of every installation.
-$installFunctionList = @("WindowsFeatures", "Prerequisites", "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Multimedia", "WorkTools", "TechTools", "Gaming")
+$installFunctionList = @("WindowsFeatures", "Prerequisites", "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Atom", "Multimedia", "WorkTools", "EducationTools", "TechTools", "Gaming")
 
 # Contents of these lists are looped as individual packages / modules.
 $installWindowsFeaturesDismList = @("Microsoft-Windows-Subsystem-Linux", "Microsoft-Hyper-V-All", "LegacyComponents")
@@ -26,7 +26,8 @@ $installBrowsersList = @("firefox -packageParameters 'l=en-US'", "GoogleChrome",
 $installCommunicationToolsList = @("mattermost-desktop", "skype")
 $installDevToolsList = @("android-sdk", "sqlitebrowser", "winscp")
 $installMultimediaList = @("jdownloader -pre", "transmission", "vlc", "xmedia-recode")
-$installWorkToolsList = @("adobe-creative-cloud", "elsterformular", "outlookcaldav", "onenote", "onetastic", "teamviewer", "todoist", "xmind")
+$installWorkToolsList = @("adobe-creative-cloud", "elsterformular", "outlookcaldav", "onenote", "onetastic", "teamviewer", "todoist")
+$installEducationToolsList = @("miktek", "R.Project", "R.Studio", "russian-grammatical-dictionary", "xmind" "zotero")
 $installTechToolsList = @("docker-for-windows", "doublecmd", "fiddler", "groupy", "keepass", "keepass-plugin-favicon", "linkshellextension", "lockhunter", "mp3tag", "nirlauncher", "openvpn", "putty", "recuva", "reshack", "royalts", "rufus", "speccy", "sysinternals", "teracopy", "testdisk-photorec", "windirstat", "winmerge-jp", "wireshark")
 $installGamingList = @("goggalaxy", "origin", "steam", "twitch", "uplay")
 
@@ -35,7 +36,7 @@ $installDesktopOnlyList = @("dopamine", "defraggler", "eac", "imgburn", "gamesav
 $installSurfaceOnlyList = @("wifi-manager")
 
 # $storeAppsList @("amazonmusic", "evernote", "heidisql", "Office365HomePremium", "paint.net", "slack", "spotify", "whatsapp")
-# $notAvailableList = @("cisco-anyconnect", "citavi", "instagiffer", "multibootusb", "notion", "russian-grammatical-dictionary", "pstart")
+# $notAvailableList = @("cisco-anyconnect", "citavi", "instagiffer", "multibootusb", "notion", "pstart")
 
 $checkpointPrefix = 'BoxStarter:Checkpoint:'
 
@@ -261,6 +262,11 @@ function Install-VisualStudioCode {
 
     code --install-extension Shan.code-settings-sync
     Update-Path
+}
+
+function Install-Atom {
+    choco install atom
+    apm install sync-settings
 }
 
 function Install-Multimedia {
