@@ -36,7 +36,7 @@ $installDesktopOnlyList = @("dopamine", "defraggler", "eac", "imgburn", "gamesav
 $installSurfaceOnlyList = @("wifi-manager")
 
 # $storeAppsList @("amazonmusic", "evernote", "heidisql", "Office365HomePremium", "paint.net", "slack", "spotify", "whatsapp")
-# $notAvailableList = @("cisco-anyconnect", "citavi", "instagiffer", "multibootusb", "notion", "pstart")
+# $notAvailableList = @("cisco-anyconnect", "citavi", "instagiffer", "multibootusb", "notion")
 
 $checkpointPrefix = 'BoxStarter:Checkpoint:'
 
