@@ -14,22 +14,23 @@ $Boxstarter.NoPassword = $false
 $Boxstarter.AutoLogin = $true
 
 # List of all functions that are part of every installation.
-$installFunctionList = @("WindowsFeatures", "Prerequisites", "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Atom", "Multimedia", "WorkTools", "EducationTools", "TechTools", "Gaming")
+$installFunctionList = @("WindowsFeatures", "Prerequisites", "Anaconda" "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Atom", "Multimedia", "WorkTools", "EducationTools", "TechTools", "Gaming")
 
 # Contents of these lists are looped as individual packages / modules.
 $installWindowsFeaturesDismList = @("Microsoft-Windows-Subsystem-Linux", "LegacyComponents") # Microsoft-Hyper-V-All is currently removed
 $addWindowsCapabilityList = @("OpenSSH*")
 $installPowerShellToolsList = @("au", "conemu", "gow", "pstools", "vcxsrv")
 $installPowerShellModulesList = @("Get-ChildItemColor", "posh-git", "Pscx", "PSReadline", "z")
-$installPrerequisitesList = @("1password", "7zip", "dropbox", "flashplayerplugin", "git", "google-drive-file-stream", "google-backup-and-sync", "javaruntime", "jdk8", "lame", "notepad3", "python", "python2", "quicktime", "strawberryperl", "unchecky", "virtualbox", "VirtualBox.ExtensionPack", "vmwareworkstation")
+$installPrerequisitesList = @("1password", "7zip", "dropbox", "flashplayerplugin", "git", "google-drive-file-stream", "google-backup-and-sync", "javaruntime", "jdk8", "lame", "notepad3", "quicktime", "strawberryperl", "unchecky", "virtualbox", "VirtualBox.ExtensionPack", "vmwareworkstation")
 $installBrowsersList = @("firefox -packageParameters 'l=en-US'", "GoogleChrome", "tor-browser", "vivaldi")
 $installCommunicationToolsList = @("mattermost-desktop", "skype")
 $installDevToolsList = @("android-sdk", "sqlitebrowser", "winscp")
 $installMultimediaList = @("jdownloader -pre", "transmission", "vlc", "xmedia-recode")
 $installWorkToolsList = @("adobe-creative-cloud", "elsterformular", "outlookcaldav", "onenote", "onetastic", "teamviewer", "todoist")
-$installEducationToolsList = @("miktek", "R.Project", "R.Studio", "russian-grammatical-dictionary", "xmind" "zotero")
+$installEducationToolsList = @("miktek", "russian-grammatical-dictionary", "xmind" "zotero")
 $installTechToolsList = @("docker-toolbox", "doublecmd", "fiddler", "groupy", "keepass", "keepass-plugin-favicon", "linkshellextension", "lockhunter", "mp3tag", "nirlauncher", "openvpn", "putty", "recuva", "reshack", "royalts", "rufus", "speccy", "sysinternals", "teracopy", "testdisk-photorec", "windirstat", "winmerge-jp", "wireshark")
 $installGamingList = @("goggalaxy", "origin", "steam", "twitch", "uplay")
+$condaPackages = @("python", "mro-base", "r-essentials", "rstudio", "numpy", "pandas", "seaborn", "scikit-learn", "requests", "ipython", "ipykernel", "python-language-server", "r-igraph")
 
 # Specific lists for different systems.
 $installDesktopOnlyList = @("dopamine", "defraggler", "eac", "imgburn", "gamesavemanager", "geforce-experience", "Physx.Legacy")
@@ -267,6 +268,18 @@ function Install-VisualStudioCode {
 function Install-Atom {
     choco install atom
     apm install sync-settings
+}
+
+function Install-Anaconda {
+    choco install miniconda3 --params='/AddToPath:1 /RegisterPython:1'
+
+    foreach ($package in $condaPackages) {
+        conda install $package -y
+    }
+
+    Rscript -e "install.packages('languageserver', repos='http://cran.us.r-project.org')"
+    python3 -m ipykernel install --user
+    Rscript -e 'IRkernel::installspec()'
 }
 
 function Install-Multimedia {
