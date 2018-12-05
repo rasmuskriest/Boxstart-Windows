@@ -14,14 +14,15 @@ $Boxstarter.NoPassword = $false
 $Boxstarter.AutoLogin = $true
 
 # List of all functions that are part of every installation.
-$installFunctionList = @("WindowsFeatures", "Prerequisites", "Anaconda", "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Atom", "Multimedia", "WorkTools", "EducationTools", "TechTools", "Gaming")
+$installFunctionList = @("WindowsFeatures", "Dependencies", "Prerequisites", "Anaconda", "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Atom", "Multimedia", "WorkTools", "EducationTools", "TechTools", "Gaming")
 
 # Contents of these lists are looped as individual packages / modules.
 $installWindowsFeaturesDismList = @("Microsoft-Windows-Subsystem-Linux", "LegacyComponents") # Microsoft-Hyper-V-All is currently removed
 $addWindowsCapabilityList = @("OpenSSH*")
 $installPowerShellToolsList = @("au", "conemu", "gow", "pstools", "vcxsrv")
 $installPowerShellModulesList = @("Get-ChildItemColor", "posh-git", "Pscx", "PSReadline", "z")
-$installPrerequisitesList = @("1password", "7zip", "dropbox", "flashplayerplugin", "git", "google-drive-file-stream", "google-backup-and-sync", "javaruntime", "jdk8", "lame", "notepad3", "quicktime", "strawberryperl", "unchecky", "virtualbox", "VirtualBox.ExtensionPack", "vmwareworkstation")
+$installDependenciesList = @("7zip", "dotnetcore", "flashplayerplugin", "git", "javaruntime", "jdk8", "lame", "quicktime", "strawberryperl")
+$installPrerequisitesList = @("1password", "dropbox", "google-drive-file-stream", "google-backup-and-sync", "notepad3", "unchecky", "virtualbox", "VirtualBox.ExtensionPack", "vmwareworkstation")
 $installBrowsersList = @("firefox -packageParameters 'l=en-US'", "GoogleChrome", "tor-browser", "vivaldi")
 $installCommunicationToolsList = @("mattermost-desktop", "skype")
 $installDevToolsList = @("android-sdk", "sqlitebrowser", "winscp")
