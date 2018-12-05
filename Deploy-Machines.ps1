@@ -14,7 +14,7 @@ $Boxstarter.NoPassword = $false
 $Boxstarter.AutoLogin = $true
 
 # List of all functions that are part of every installation.
-$installFunctionList = @("WindowsFeatures", "Prerequisites", "Anaconda" "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Atom", "Multimedia", "WorkTools", "EducationTools", "TechTools", "Gaming")
+$installFunctionList = @("WindowsFeatures", "Prerequisites", "Anaconda", "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Atom", "Multimedia", "WorkTools", "EducationTools", "TechTools", "Gaming")
 
 # Contents of these lists are looped as individual packages / modules.
 $installWindowsFeaturesDismList = @("Microsoft-Windows-Subsystem-Linux", "LegacyComponents") # Microsoft-Hyper-V-All is currently removed
