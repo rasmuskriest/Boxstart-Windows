@@ -28,7 +28,7 @@ $installCommunicationToolsList = @("mattermost-desktop", "skype")
 $installDevToolsList = @("android-sdk", "sqlitebrowser", "winscp")
 $installMultimediaList = @("jdownloader -pre", "transmission", "vlc", "xmedia-recode")
 $installWorkToolsList = @("adobe-creative-cloud", "elsterformular", "outlookcaldav", "onenote", "onetastic", "teamviewer", "todoist")
-$installEducationToolsList = @("miktek", "R.Project", "R.Studio", "russian-grammatical-dictionary", "xmind" "zotero")
+$installEducationToolsList = @("miktek", "R.Project", "R.Studio", "russian-grammatical-dictionary", "texmaker", "xmind", "zotero")
 $installTechToolsList = @("docker-toolbox", "doublecmd", "fiddler", "groupy", "keepass", "keepass-plugin-favicon", "linkshellextension", "lockhunter", "mp3tag", "nirlauncher", "openvpn", "putty", "recuva", "reshack", "royalts", "rufus", "speccy", "sysinternals", "teracopy", "testdisk-photorec", "windirstat", "winmerge-jp", "wireshark")
 $installGamingList = @("goggalaxy", "origin", "steam", "twitch", "uplay")
 
