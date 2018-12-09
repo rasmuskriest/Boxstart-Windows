@@ -21,7 +21,7 @@ $installWindowsFeaturesDismList = @("Microsoft-Windows-Subsystem-Linux", "Legacy
 $addWindowsCapabilityList = @("OpenSSH*")
 $installPowerShellToolsList = @("au", "conemu", "gow", "pstools", "vcxsrv")
 $installPowerShellModulesList = @("Get-ChildItemColor", "posh-git", "Pscx", "PSReadline", "z")
-$installDependenciesList = @("7zip", "dotnetcore", "flashplayerplugin", "git", "javaruntime", "jdk8", "lame", "powershell-core", "quicktime", "strawberryperl")
+$installDependenciesList = @("7zip", "dotnetcore", "flashplayerplugin", "git", "golang", "javaruntime", "jdk8", "lame", "powershell-core", "quicktime", "strawberryperl")
 $installPrerequisitesList = @("1password", "dropbox", "google-drive-file-stream", "google-backup-and-sync", "notepad3", "unchecky", "virtualbox", "VirtualBox.ExtensionPack", "vmwareworkstation")
 $installBrowsersList = @("firefox -packageParameters 'l=en-US'", "GoogleChrome", "tor-browser", "vivaldi")
 $installCommunicationToolsList = @("mattermost-desktop", "skype")
