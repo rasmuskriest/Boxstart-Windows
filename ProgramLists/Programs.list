@@ -27,6 +27,7 @@ linkshellextension
 lockhunter
 mattermost-desktop
 miktek
+miniconda3 --params="'/AddToPath:1'"
 mp3tag
 nirlauncher
 notepad3
@@ -37,7 +38,6 @@ origin
 outlookcaldav
 putty
 R.Project
-R.Studio
 recuva
 reshack
 royalts
@@ -58,6 +58,7 @@ transmission
 twitch
 unchecky
 uplay
+visualstudio2017community
 vivaldi
 vlc
 vscode
