@@ -13,33 +13,12 @@ $Boxstarter.RebootOk = $false
 $Boxstarter.NoPassword = $false
 $Boxstarter.AutoLogin = $true
 
-# List of all functions that are part of every installation.
-$installFunctionList = @("WindowsFeatures", "Dependencies", "Prerequisites", "Browsers", "CommunicationTools", "DevTools", "Vagrant", "VisualStudioCode", "Multimedia", "WorkTools", "EducationTools", "TechTools", "Gaming")
-
-# Contents of these lists are looped as individual packages / modules.
-$installWindowsFeaturesDismList = @("Microsoft-Windows-Subsystem-Linux", "LegacyComponents") # Microsoft-Hyper-V-All is currently removed
-$addWindowsCapabilityList = @("OpenSSH*")
-$installPowerShellToolsList = @("au", "conemu", "gow", "pstools", "vcxsrv")
-$installPowerShellModulesList = @("Get-ChildItemColor", "posh-git", "Pscx", "PSReadline", "z")
-$installDependenciesList = @("7zip", "dotnetcore", "flashplayerplugin", "git", "golang", "javaruntime", "jdk8", "lame", "powershell-core", "quicktime", "strawberryperl")
-$installPrerequisitesList = @("1password", "dropbox", "google-drive-file-stream", "google-backup-and-sync", "notepad3", "unchecky", "virtualbox", "VirtualBox.ExtensionPack", "vmwareworkstation")
-$installBrowsersList = @("firefox -packageParameters 'l=en-US'", "GoogleChrome", "tor-browser", "vivaldi")
-$installCommunicationToolsList = @("mattermost-desktop", "skype")
-$installDevToolsList = @("android-sdk", "sqlitebrowser", "winscp")
-$installMultimediaList = @("jdownloader -pre", "transmission", "vlc", "xmedia-recode")
-$installWorkToolsList = @("adobe-creative-cloud", "elsterformular", "outlookcaldav", "onenote", "onetastic", "teamviewer", "todoist")
-$installEducationToolsList = @("miktek", "R.Project", "R.Studio", "russian-grammatical-dictionary", "texmaker", "xmind", "zotero")
-$installTechToolsList = @("docker-toolbox", "doublecmd", "fiddler", "groupy", "keepass", "keepass-plugin-favicon", "linkshellextension", "lockhunter", "mp3tag", "nirlauncher", "openvpn", "putty", "recuva", "reshack", "royalts", "rufus", "speccy", "sysinternals", "teracopy", "testdisk-photorec", "windirstat", "winmerge-jp", "wireshark")
-$installGamingList = @("goggalaxy", "origin", "steam", "twitch", "uplay")
-
-# Specific lists for different systems.
-$installDesktopOnlyList = @("dopamine", "defraggler", "eac", "imgburn", "gamesavemanager", "geforce-experience", "Physx.Legacy")
-$installSurfaceOnlyList = @("wifi-manager")
-
-# $storeAppsList @("amazonmusic", "evernote", "heidisql", "Office365HomePremium", "paint.net", "slack", "spotify", "whatsapp")
-# $notAvailableList = @("cisco-anyconnect", "citavi", "instagiffer", "multibootusb", "notion")
-
+$baseUri = "https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master"
 $checkpointPrefix = 'BoxStarter:Checkpoint:'
+
+# List of all functions that are part of every installation.
+$installFunctionList = @("WindowsFeatures", "PowerShell", "Dependencies", "Programs")
+$runScriptList = @("Chocolatey", "Git", "Vagrant", "VSCode")
 
 # WFunctions to handle checkpoints.
 
@@ -147,7 +126,13 @@ function Update-Path {
 }
 
 function Install-ChocoPackage {
-    choco install $args
+    choco install $args -y
+}
+
+function Execute-Script {
+    Param ([string]$script)
+    Write-Host "Executing $script ..."
+    Invoke-Expression ((New-Object net.webclient).DownloadString("$baseUri/RunScripts/$script.ps1"))
 }
 
 function Install-WindowsUpdate {
@@ -157,15 +142,10 @@ function Install-WindowsUpdate {
 
     Enable-MicrosoftUpdate
     Install-WindowsUpdate -AcceptEula
-    #if (Test-PendingReboot) { Invoke-Reboot }
+    if (Test-PendingReboot) { Invoke-Reboot }
 }
 
 # Beginning of specific functions for this install.
-
-function Enable-ChocolateyFeatures {
-    choco feature enable --name=autoUninstaller
-    choco feature enable --name=allowGlobalConfirmation
-}
 
 function Set-BaseSettings {
     Enable-RemoteDesktop
@@ -191,10 +171,12 @@ function Update-WindowsLibraries {
 # While many functions might seem similiar, they are handeled individually to allow for additional commands, i.e. set policies.
 
 function Install-WindowsFeatures {
+    $installWindowsFeaturesDismList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/WindowsFeaturesDism.list | Select-Object -ExpandProperty Content
     foreach ($dismFeature in $installWindowsFeaturesDismList) {
         dism /Online /Enable-Feature /FeatureName=$dismFeature /NoRestart
     }
 
+    $installWindowsFeaturesDismList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/WindowsCapability.list | Select-Object -ExpandProperty Content
     foreach ($windowsCapability in $addWindowsCapabilityList) {
         Add-WindowsCapability -Online -Name $windowsCapability
     }
@@ -206,15 +188,14 @@ function Install-WindowsFeatures {
     if (Test-PendingReboot) { Invoke-Reboot }
 }
 
-function Install-PowerShellTools {
+function Install-PowerShell {
+    $installPowerShellToolsList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/PowerShellTools.list | Select-Object -ExpandProperty Content
     foreach ($package in $installPowerShellToolsList) {
         Install-ChocoPackage $package
     }
-}
-
-function Install-PowerShellModules {
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Trusted'
 
+    $installPowerShellModulesList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/PowerShellModules.list | Select-Object -ExpandProperty Content
     foreach ($module in $installPowerShellModulesList) {
         Install-Module $module -Scope CurrentUser -AllowClobber
     }
@@ -222,101 +203,42 @@ function Install-PowerShellModules {
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Untrusted'
 }
 
-function Install-Prerequisites {
-    foreach ($package in $installPrerequisitesList) {
+function Install-Dependencies {
+    $installDependencies = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/Dependencies.list | Select-Object -ExpandProperty Content
+    foreach ($package in $installDependencies) {
         Install-ChocoPackage $package
     }
 }
 
-function Install-Browsers {
-    foreach ($package in $installBrowsersList) {
-        Install-ChocoPackage $package
-    }
-}
-
-function Install-CommunicationTools {
-    foreach ($package in $installCommunicationToolsList) {
-        Install-ChocoPackage $package
-    }
-}
-
-function Install-DevTools {
-    foreach ($package in $installDevToolsList) {
-        Install-ChocoPackage $package
-    }
-}
-
-function Install-Vagrant {
-    choco install vagrant
-    Update-Path
-    # [Environment]::SetEnvironmentVariable("VAGRANT_DEFAULT_PROVIDER", "hyperv", "Machine")
-
-    vagrant plugin install sahara # needed for chocolatey-test-environment
-    vagrant plugin install vagrant-hostsupdater # needed for most boxes that are to be reached from the host
-}
-
-function Install-VisualStudioCode {
-    choco install vscode
-
-    Start-Process code
-    Start-Sleep -s 10
-
-    code --install-extension Shan.code-settings-sync
-    Update-Path
-}
-
-function Install-Multimedia {
-    foreach ($package in $installMultimediaList) {
-        Install-ChocoPackage $package
-    }
-}
-
-function Install-WorkTools {
-    foreach ($package in $installWorkToolsList) {
-        Install-ChocoPackage $package
-    }
-}
-
-function Install-TechTools {
-    foreach ($package in $installTechToolsList) {
-        Install-ChocoPackage $package
-    }
-}
-
-function Install-Gaming {
-    foreach ($package in $installGamingList) {
+function Install-Programs {
+    $installProgramsList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/Programs.list | Select-Object -ExpandProperty Content
+    foreach ($package in $installProgramsList) {
         Install-ChocoPackage $package
     }
 }
 
 function Install-DesktopOnly {
+    $installDesktopOnlyList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/DesktopOnly.list | Select-Object -ExpandProperty Content
     foreach ($package in $installDesktopOnlyList) {
         Install-ChocoPackage $package
     }
 }
 
 function Install-SurfaceOnly {
+    $installSurfaceOnlyList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/SurfaceOnly.list | Select-Object -ExpandProperty Content
     foreach ($package in $installSurfaceOnlyList) {
         Install-ChocoPackage $package
     }
 }
 
 # Configuration functions.
-
-function ConfigureSoftware {
-    git config --global core.editor "nano"
-    git config --global user.name "rasmuskriest"
-    git config --global user.email "rasmusk@outlook.com"
-}
-
 $dataDriveLetter = Get-DataDrive
 $dataDrive = "$dataDriveLetter`:"
 
 # This is where the actual script starts.
-
 Use-Checkpoint -Function ${Function:Set-BaseSettings} -CheckpointName 'BaseSettings' -SkipMessage 'BaseSettings already configured'
 Use-Checkpoint -Function ${Function:Update-WindowsLibraries} -CheckpointName 'WindowsLibraries' -SkipMessage 'WindowsLibraries already moved'
-Use-Checkpoint -Function ${Function:Install-PowerShellTools} -CheckpointName 'PowerShellTools' -SkipMessage 'PowerShellTools already installed'
+Use-Checkpoint -Function ${Function:Install-PowerShell} -CheckpointName 'PowerShell' -SkipMessage 'PowerShellTools already installed'
 
 foreach ($installFunction in $installFunctionList) {
     Write-BoxstarterMessage "Installing $installFunction"
@@ -339,18 +261,16 @@ if (Test-Path env:\BoxStarter:InstallSurface) {
 
 # Install Chocolatey as very last package
 choco install chocolatey
-# Change default Chocolatey behaviour
-Use-Checkpoint -Function ${Function:Enable-ChocolateyFeatures} -CheckpointName 'IntialiseChocolatey' -SkipMessage 'Chocolatey already configured'
-
 if (Test-PendingReboot) { Invoke-Reboot }
 
 # Reload path
 Update-Path
 Set-Volume -DriveLetter $sytemDrive -NewFileSystemLabel "Windows"
 
-Use-Checkpoint -Function ${Function:Install-PowerShellModules} -CheckpointName 'PowerShellModules' -SkipMessage 'PowerShell modules already installed'
-
-Use-Checkpoint -Function ${Function:ConfigureSoftware} -CheckpointName 'ConfigureSoftware' -SkipMessage 'Software already configured'
+# Configure Software
+foreach ($script in $runScriptList) {
+    Execute-Script $script
+}
 
 # Run Windows Update one last time
 Write-BoxstarterMessage "Updating Windows"
