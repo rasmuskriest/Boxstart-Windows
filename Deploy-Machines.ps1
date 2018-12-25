@@ -20,8 +20,7 @@ $checkpointPrefix = 'BoxStarter:Checkpoint:'
 $installFunctionList = @("WindowsFeatures", "PowerShell", "Dependencies", "Programs")
 $runScriptList = @("Chocolatey", "Git", "Vagrant", "VSCode")
 
-# WFunctions to handle checkpoints.
-
+# Functions to handle checkpoints.
 function Get-CheckpointName {
     param
     (
@@ -94,7 +93,6 @@ function Use-Checkpoint {
 }
 
 # Functions to handle drives.
-
 function Get-SystemDrive {
     return $env:SystemDrive[0]
 }
@@ -110,7 +108,6 @@ function Get-DataDrive {
 }
 
 # Necessary functions to run script.
-
 function Convert-StringToScriptBlock {
     param(
         [parameter(ValueFromPipeline = $true, Position = 0)]
@@ -146,7 +143,6 @@ function Install-WindowsUpdate {
 }
 
 # Beginning of specific functions for this install.
-
 function Set-BaseSettings {
     Enable-RemoteDesktop
     Set-CornerNavigationOptions -EnableUsePowerShellOnWinX
@@ -169,7 +165,6 @@ function Update-WindowsLibraries {
 }
 
 # While many functions might seem similiar, they are handeled individually to allow for additional commands, i.e. set policies.
-
 function Install-WindowsFeatures {
     $installWindowsFeaturesDismList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/WindowsFeaturesDism.list | Select-Object -ExpandProperty Content
     foreach ($dismFeature in $installWindowsFeaturesDismList) {
