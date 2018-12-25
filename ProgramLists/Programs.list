@@ -3,10 +3,13 @@
 # instagiffer
 # multibootusb
 # notion
+# virtualbox
+# VirtualBox.ExtensionPack
+# vmwareworkstation
 1password
 adobe-creative-cloud
 android-sdk
-docker-toolbox
+docker-desktop
 doublecmd
 dropbox
 elsterformular
@@ -55,11 +58,8 @@ transmission
 twitch
 unchecky
 uplay
-virtualbox
-VirtualBox.ExtensionPack
 vivaldi
 vlc
-vmwareworkstation
 vscode
 windirstat
 winmerge-jp
