@@ -167,13 +167,13 @@ function Update-WindowsLibraries {
 # While many functions might seem similiar, they are handeled individually to allow for additional commands, i.e. set policies.
 function Install-WindowsFeatures {
     $installWindowsFeaturesDismList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/WindowsFeaturesDism.list | Select-Object -ExpandProperty Content
-    foreach ($dismFeature in $installWindowsFeaturesDismList) {
-        dism /Online /Enable-Feature /FeatureName=$dismFeature /NoRestart
+    $installWindowsFeaturesDismList -split "`n" | ForEach-Object {
+        dism /Online /Enable-Feature /FeatureName=$_ /NoRestart
     }
 
     $installWindowsFeaturesDismList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/WindowsCapability.list | Select-Object -ExpandProperty Content
-    foreach ($windowsCapability in $addWindowsCapabilityList) {
-        Add-WindowsCapability -Online -Name $windowsCapability
+    $addWindowsCapabilityList -split "`n" | ForEach-Object {
+        Add-WindowsCapability -Online -Name $_
     }
     
     # See https://docs.microsoft.com/en-us/windows/wsl/install-manual
@@ -185,44 +185,44 @@ function Install-WindowsFeatures {
 
 function Install-PowerShell {
     $installPowerShellToolsList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/PowerShellTools.list | Select-Object -ExpandProperty Content
-    foreach ($package in $installPowerShellToolsList) {
-        Install-ChocoPackage $package
+    $installPowerShellToolsList -split "`n" | ForEach-Object {
+        choco install $_
     }
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Trusted'
 
     $installPowerShellModulesList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/PowerShellModules.list | Select-Object -ExpandProperty Content
-    foreach ($module in $installPowerShellModulesList) {
-        Install-Module $module -Scope CurrentUser -AllowClobber
+    $installPowerShellModulesList -split "`n" | ForEach-Object {
+        Install-Module $_ -Scope CurrentUser -AllowClobber
     }
 
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Untrusted'
 }
 
 function Install-Dependencies {
-    $installDependencies = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/Dependencies.list | Select-Object -ExpandProperty Content
-    foreach ($package in $installDependencies) {
-        Install-ChocoPackage $package
+    $installDependenciesList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/Dependencies.list | Select-Object -ExpandProperty Content
+    $installDependenciesList -split "`n" | ForEach-Object {
+        choco install $_
     }
 }
 
 function Install-Programs {
     $installProgramsList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/Programs.list | Select-Object -ExpandProperty Content
-    foreach ($package in $installProgramsList) {
-        Install-ChocoPackage $package
+    $installProgramsList -split "`n" | ForEach-Object {
+        choco install $_
     }
 }
 
 function Install-DesktopOnly {
     $installDesktopOnlyList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/DesktopOnly.list | Select-Object -ExpandProperty Content
-    foreach ($package in $installDesktopOnlyList) {
-        Install-ChocoPackage $package
+    $installDesktopOnlyList -split "`n" | ForEach-Object {
+        choco install $_
     }
 }
 
 function Install-SurfaceOnly {
     $installSurfaceOnlyList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/SurfaceOnly.list | Select-Object -ExpandProperty Content
-    foreach ($package in $installSurfaceOnlyList) {
-        Install-ChocoPackage $package
+    $installSurfaceOnlyList -split "`n" | ForEach-Object {
+        choco install $_
     }
 }
 
