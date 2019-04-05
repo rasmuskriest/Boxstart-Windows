@@ -123,7 +123,7 @@ function Update-Path {
 }
 
 function Install-ChocoPackage {
-    choco install $args --yes --limitoutput
+    choco.exe install $args --yes --limitoutput
 }
 
 function Execute-Script {
@@ -168,12 +168,12 @@ function Update-WindowsLibraries {
 function Install-WindowsFeatures {
     $installWindowsFeaturesDismList = Invoke-WebRequest -Uri $baseUri/ProgramLists/WindowsFeaturesDism.list | Select-Object -ExpandProperty Content
     $installWindowsFeaturesDismList -split "`n" | ForEach-Object {
-        dism /Online /Enable-Feature /FeatureName=$_ /NoRestart
+        Dism.exe /Online /Enable-Feature /FeatureName=$_ /NoRestart
     }
 
     $installWindowsFeaturesDismList = Invoke-WebRequest -Uri $baseUri/ProgramLists/WindowsCapability.list | Select-Object -ExpandProperty Content
     $addWindowsCapabilityList -split "`n" | ForEach-Object {
-        Add-WindowsCapability -Online -Name $_
+        Add-WindowsCapability -Online -Name `"$_`"
     }
     
     # See https://docs.microsoft.com/en-us/windows/wsl/install-manual
