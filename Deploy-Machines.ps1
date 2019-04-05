@@ -18,7 +18,7 @@ $checkpointPrefix = 'Boxstarter:Checkpoint:'
 
 # List of all functions that are part of every installation.
 $installFunctionList = @("WindowsFeatures", "PowerShell", "Dependencies", "Programs")
-$runScriptList = @("Chocolatey", "Git", "Vagrant", "VSCode")
+$runScriptList = @("Chocolatey", "Git", "VSCode")
 
 # Functions to handle checkpoints.
 function Get-CheckpointName {
