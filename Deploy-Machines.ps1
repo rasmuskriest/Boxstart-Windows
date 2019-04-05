@@ -231,26 +231,26 @@ $dataDriveLetter = Get-DataDrive
 $dataDrive = "$dataDriveLetter`:"
 
 # This is where the actual script starts.
-Use-Checkpoint -Function ${Function:Set-BaseSettings} -CheckpointName 'BaseSettings' -SkipMessage 'BaseSettings already configured'
-Use-Checkpoint -Function ${Function:Update-WindowsLibraries} -CheckpointName 'WindowsLibraries' -SkipMessage 'WindowsLibraries already moved'
-Use-Checkpoint -Function ${Function:Install-PowerShell} -CheckpointName 'PowerShell' -SkipMessage 'PowerShellTools already installed'
+Use-Checkpoint -Function ${Function:Set-BaseSettings} -CheckpointName 'BaseSettings' -SkipMessage "BaseSettings already configured"
+Use-Checkpoint -Function ${Function:Update-WindowsLibraries} -CheckpointName 'WindowsLibraries' -SkipMessage "WindowsLibraries already moved"
+Use-Checkpoint -Function ${Function:Install-PowerShell} -CheckpointName 'PowerShell' -SkipMessage "PowerShellTools already installed"
 
 foreach ($installFunction in $installFunctionList) {
     Write-BoxstarterMessage "Installing $installFunction"
     $forwardFunction = Convert-StringToScriptBlock "Install-$installFunction"
-    Use-Checkpoint -Function $forwardFunction -CheckpointName $installFunction -SkipMessage '$installFunction already installed'
+    Use-Checkpoint -Function $forwardFunction -CheckpointName $installFunction -SkipMessage "$installFunction already installed"
 }
 
 if (Test-Path env:\BoxStarter:InstallDesktop) {
     Write-BoxstarterMessage "Installing desktop-only software"
 
-    Use-Checkpoint -Function ${Function:Install-DesktopOnly} -CheckpointName 'InstallDesktopOnly' -SkipMessage 'Desktop-only software already installed'
+    Use-Checkpoint -Function ${Function:Install-DesktopOnly} -CheckpointName 'InstallDesktopOnly' -SkipMessage "Desktop-only software already installed"
     if (Test-PendingReboot) { Invoke-Reboot }
 }
 
 if (Test-Path env:\BoxStarter:InstallSurface) {
     Write-BoxstarterMessage "Installing Surface-only software"
-    Use-Checkpoint -Function ${Function:Install-SurfaceOnly} -CheckpointName 'InstallSurfaceOnly' -SkipMessage 'InstallSurfaceOnly already installed'
+    Use-Checkpoint -Function ${Function:Install-SurfaceOnly} -CheckpointName "InstallSurfaceOnly" -SkipMessage "InstallSurfaceOnly already installed"
     if (Test-PendingReboot) { Invoke-Reboot }
 }
 
