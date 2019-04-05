@@ -14,7 +14,7 @@ $Boxstarter.NoPassword = $false
 $Boxstarter.AutoLogin = $true
 
 $baseUri = "https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master"
-$checkpointPrefix = 'BoxStarter:Checkpoint:'
+$checkpointPrefix = 'Boxstarter:Checkpoint:'
 
 # List of all functions that are part of every installation.
 $installFunctionList = @("WindowsFeatures", "PowerShell", "Dependencies", "Programs")
@@ -123,7 +123,7 @@ function Update-Path {
 }
 
 function Install-ChocoPackage {
-    choco install $args -y
+    choco install $args --yes --limitoutput
 }
 
 function Execute-Script {
@@ -166,12 +166,12 @@ function Update-WindowsLibraries {
 
 # While many functions might seem similiar, they are handeled individually to allow for additional commands, i.e. set policies.
 function Install-WindowsFeatures {
-    $installWindowsFeaturesDismList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/WindowsFeaturesDism.list | Select-Object -ExpandProperty Content
+    $installWindowsFeaturesDismList = Invoke-WebRequest -Uri $baseUri/ProgramLists/WindowsFeaturesDism.list | Select-Object -ExpandProperty Content
     $installWindowsFeaturesDismList -split "`n" | ForEach-Object {
         dism /Online /Enable-Feature /FeatureName=$_ /NoRestart
     }
 
-    $installWindowsFeaturesDismList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/WindowsCapability.list | Select-Object -ExpandProperty Content
+    $installWindowsFeaturesDismList = Invoke-WebRequest -Uri $baseUri/ProgramLists/WindowsCapability.list | Select-Object -ExpandProperty Content
     $addWindowsCapabilityList -split "`n" | ForEach-Object {
         Add-WindowsCapability -Online -Name $_
     }
@@ -184,13 +184,13 @@ function Install-WindowsFeatures {
 }
 
 function Install-PowerShell {
-    $installPowerShellToolsList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/PowerShellTools.list | Select-Object -ExpandProperty Content
+    $installPowerShellToolsList = Invoke-WebRequest -Uri $baseUri/ProgramLists/PowerShellTools.list | Select-Object -ExpandProperty Content
     $installPowerShellToolsList -split "`n" | ForEach-Object {
-        choco install $_
+        Install-ChocoPackage $_
     }
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Trusted'
 
-    $installPowerShellModulesList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/PowerShellModules.list | Select-Object -ExpandProperty Content
+    $installPowerShellModulesList = Invoke-WebRequest -Uri $baseUri/ProgramLists/PowerShellModules.list | Select-Object -ExpandProperty Content
     $installPowerShellModulesList -split "`n" | ForEach-Object {
         Install-Module $_ -Scope CurrentUser -AllowClobber
     }
@@ -199,30 +199,30 @@ function Install-PowerShell {
 }
 
 function Install-Dependencies {
-    $installDependenciesList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/Dependencies.list | Select-Object -ExpandProperty Content
+    $installDependenciesList = Invoke-WebRequest -Uri $baseUri/ProgramLists/Dependencies.list | Select-Object -ExpandProperty Content
     $installDependenciesList -split "`n" | ForEach-Object {
-        choco install $_
+        Install-ChocoPackage $_
     }
 }
 
 function Install-Programs {
-    $installProgramsList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/Programs.list | Select-Object -ExpandProperty Content
+    $installProgramsList = Invoke-WebRequest -Uri $baseUri/ProgramLists/Programs.list | Select-Object -ExpandProperty Content
     $installProgramsList -split "`n" | ForEach-Object {
-        choco install $_
+        Install-ChocoPackage $_
     }
 }
 
 function Install-DesktopOnly {
-    $installDesktopOnlyList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/DesktopOnly.list | Select-Object -ExpandProperty Content
+    $installDesktopOnlyList = Invoke-WebRequest -Uri $baseUri/ProgramLists/DesktopOnly.list | Select-Object -ExpandProperty Content
     $installDesktopOnlyList -split "`n" | ForEach-Object {
-        choco install $_
+        Install-ChocoPackage $_
     }
 }
 
 function Install-SurfaceOnly {
-    $installSurfaceOnlyList = Invoke-WebRequest -Uri https://raw.githubusercontent.com/rasmuskriest/Boxstart-Windows/master/ProgramLists/SurfaceOnly.list | Select-Object -ExpandProperty Content
+    $installSurfaceOnlyList = Invoke-WebRequest -Uri $baseUri/ProgramLists/SurfaceOnly.list | Select-Object -ExpandProperty Content
     $installSurfaceOnlyList -split "`n" | ForEach-Object {
-        choco install $_
+        Install-ChocoPackage $_
     }
 }
 
@@ -255,7 +255,7 @@ if (Test-Path env:\BoxStarter:InstallSurface) {
 }
 
 # Install Chocolatey as very last package
-choco install chocolatey
+Install-ChocoPackage chocolatey
 if (Test-PendingReboot) { Invoke-Reboot }
 
 # Reload path

@@ -2,10 +2,10 @@
 dotnetcore
 flashplayerplugin
 git
+git-credential-manager-for-windows
+gpg4win
 golang
 javaruntime
-jdk8
 lame
 powershell-core
 quicktime
-strawberryperl

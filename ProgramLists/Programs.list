@@ -3,12 +3,9 @@
 # instagiffer
 # multibootusb
 # notion
-# virtualbox
-# VirtualBox.ExtensionPack
-# vmwareworkstation
 1password
 adobe-creative-cloud
-android-sdk
+adb
 docker-desktop
 doublecmd
 dropbox
@@ -20,13 +17,11 @@ google-backup-and-sync
 google-drive-file-stream
 GoogleChrome
 groupy
-jdownloader -pre
 keepass
 keepass-plugin-favicon
 linkshellextension
 lockhunter
 mattermost-desktop
-miktek
 miniconda3 --params="'/AddToPath:1'"
 mp3tag
 nirlauncher
@@ -37,7 +32,6 @@ openvpn
 origin
 outlookcaldav
 putty
-R.Project
 recuva
 reshack
 royalts
@@ -51,10 +45,8 @@ sysinternals
 teamviewer
 teracopy
 testdisk-photorec
-texmaker
 todoist
 tor-browser
-transmission
 twitch
 unchecky
 uplay
@@ -67,5 +59,4 @@ winmerge-jp
 winscp
 wireshark
 xmedia-recode
-xmind
 zotero
